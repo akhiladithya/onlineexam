@@ -33,6 +33,13 @@ namespace onlinetraine.Controllers
         }
         #endregion
 
+        #region Create Course Assign
+        public Outputclass Create_QUESTIONs_(Usercourseassign usas)
+        {
+            return dbcls.Create_CourseAssign(usas);
+        }
+        #endregion
+
         #region Create Exam
         public Outputclass Create_Exam_(Examtable exam)
         {
@@ -40,6 +47,53 @@ namespace onlinetraine.Controllers
         }
         #endregion
 
+        #region Userregistration data
+        [HttpGet]
+        public List<Userregistration> UserRegistration_data_()
+        {
+            return dbcls.UserRegistration_data();
+        }
+        #endregion
+
+        #region Course Registration data
+        [HttpGet]
+        public List<Coursereg> CourseRegistration_data_()
+        {
+            return dbcls.CourseRegistration_data();
+        }
+        #endregion
+
+        #region QUESTIONERIES data
+        [HttpGet]
+        public List<Questioneries> Questio_data_()
+        {
+            return dbcls.Questio_data();
+        }
+        #endregion
+
+        #region User Assign data
+        [HttpGet]
+        public List<Usercourseassign> Usercourseassign_data_()
+        {
+            return dbcls.Usercourseassign_data();
+        }
+        #endregion
+
+        #region Exam data
+        [HttpGet]
+        public List<Examtable> Exam_data_()
+        {
+            return dbcls.Exam_data();
+        }
+        #endregion
+
+        #region AUDITTRAILS data
+        [HttpGet]
+        public List<Audittrails> Audittrails_data_()
+        {
+            return dbcls.Audittrails_data();
+        }
+        #endregion
 
     }
 }

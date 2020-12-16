@@ -11,6 +11,7 @@ namespace onlinetraine.Models
 
     public class Userregistration
     {
+        public int? Userid { get; set; }
         public string FIRSTNAME { get; set; }
         public string LASTNAME { get; set; }
         public string PASSWORD { get; set; }
@@ -22,6 +23,7 @@ namespace onlinetraine.Models
     }
     public class Coursereg
     {
+        public int? Courseid { get; set; }
         public string COURSENAME { get; set; }
         public string COURSEPERID { get; set; }
         public string COURSEFROMDATE { get; set; }
