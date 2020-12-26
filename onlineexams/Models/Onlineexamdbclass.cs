@@ -9,7 +9,7 @@ namespace onlineexams.Models
 {
     public class Onlineexamdbclass
     {
-        SqlConnection conn = new SqlConnection("Data Source=DESKTOP-MB778R3;database=kartheek;Integrated Security = True;");
+        SqlConnection conn = new SqlConnection("Data Source=.;database=ONLINETRAINEE; uid=sa;Password=P@ssw0rd;Integrated Security = True;");
        
         #region Connectionstring
         public void Connection()
@@ -468,5 +468,40 @@ namespace onlineexams.Models
             }
         }
         #endregion
+
+        #region ForgetPassword
+        public string Forgetpassword(Forgetpassword forgetpwd)
+        {
+            string result ="";
+            try
+            {
+                SqlCommand cmd = new SqlCommand("FORGOT_CREDENTIALS", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@TYPE", forgetpwd.Type);
+                cmd.Parameters.AddWithValue("@UID", forgetpwd.userid);
+                cmd.Parameters.AddWithValue("@AADHAR", forgetpwd.AAdhar);
+                Connection();
+                SqlDataReader dr = cmd.ExecuteReader();
+                while (dr.Read())
+                {
+                    result = dr["RESULT"] != null ? dr["RESULT"].ToString() : "";
+                    
+                }
+                dr.Close();
+                return result;
+
+            }
+            catch (Exception ex)
+            {
+                result=ex.ToString();
+                return result; 
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+        #endregion
+
     }
 }

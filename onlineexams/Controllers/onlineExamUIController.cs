@@ -50,6 +50,16 @@ namespace onlineexams.Controllers
 
             return View(ddd);
         }
+        public ActionResult forgotpassword()
+        {
+            return View();
+        }
+        public JsonResult forgot(Forgetpassword pwd)
+        {
+            string dd = ff.Forgetpassword_(pwd);
+            return Json(dd, JsonRequestBehavior.AllowGet);
+            
+        }
 
     }
 }

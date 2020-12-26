@@ -95,5 +95,13 @@ namespace onlineexams.Controllers
         }
         #endregion
 
+        #region ForgetPassword
+        [HttpGet]
+        public string Forgetpassword_(Forgetpassword forgetpwd)
+        {
+            return dbcls.Forgetpassword(forgetpwd);
+        }
+        #endregion
+
     }
 }

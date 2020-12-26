@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30225.117
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "onlinetraine", "onlinetraine\onlinetraine.csproj", "{322636BA-7B5A-4258-9332-CCB1A2699609}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "onlineexams", "onlineexams\onlineexams.csproj", "{28BEC641-1BF5-4794-A937-9BC92CA3637B}"
 EndProject
 Global
@@ -13,10 +11,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{322636BA-7B5A-4258-9332-CCB1A2699609}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{322636BA-7B5A-4258-9332-CCB1A2699609}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{322636BA-7B5A-4258-9332-CCB1A2699609}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{322636BA-7B5A-4258-9332-CCB1A2699609}.Release|Any CPU.Build.0 = Release|Any CPU
 		{28BEC641-1BF5-4794-A937-9BC92CA3637B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{28BEC641-1BF5-4794-A937-9BC92CA3637B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{28BEC641-1BF5-4794-A937-9BC92CA3637B}.Release|Any CPU.ActiveCfg = Release|Any CPU

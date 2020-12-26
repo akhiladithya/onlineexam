@@ -10,7 +10,8 @@ namespace onlineexams.Models
     
         public class Userregistration
         {
-           [Required(ErrorMessage = "Please Enter the First Name")]
+        public int? Userid { get; set; }
+        [Required(ErrorMessage = "Please Enter the First Name")]
            public string FIRSTNAME { get; set; }
            [Required(ErrorMessage = "Please Enter the Last Name")]
            public string LASTNAME { get; set; }
@@ -27,6 +28,8 @@ namespace onlineexams.Models
         }
         public class Coursereg
         {
+        
+            public int? Courseid { get; set; }
             public string COURSENAME { get; set; }
             public string COURSEPERID { get; set; }
             public string COURSEFROMDATE { get; set; }
@@ -84,5 +87,14 @@ namespace onlineexams.Models
             public string Msg { get; set; }
             public int Count { get; set; }
         }
+
+        public class Forgetpassword
+        {
+        public string Type { get; set; }
+        public string userid { get; set; }
+        public string AAdhar { get; set; }
+    }
+
+    
     
 }
