@@ -1,0 +1,113 @@
+﻿@model onlineexams.Models.Userregistration
+
+@{
+    ViewBag.Title = "createUser";
+}
+
+<h2>Registration</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.Label("First Name", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.FIRSTNAME, new { htmlAttributes = new { @class = "form-control", } })
+                @Html.ValidationMessageFor(model => model.FIRSTNAME, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Last Name", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.LASTNAME, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.LASTNAME, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Password", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PASSWORD, new { htmlAttributes = new { @class = "form-control", @type = "Password" } })
+                @Html.ValidationMessageFor(model => model.PASSWORD, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Confirm Password", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CONFORMPASSWORD, new { htmlAttributes = new { @class = "form-control", @type = "Password" } })
+                @Html.ValidationMessageFor(model => model.CONFORMPASSWORD, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Email ID", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.EMAILID, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.EMAILID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Mobile Number", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.MOBILENUMBER, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.MOBILENUMBER, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="button" value="Register" onclick="post()" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+
+</div>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script>
+    function post() {
+        debugger
+        var object = {
+            FIRSTNAME: $("#FIRSTNAME").val(),
+            LASTNAME: $("#LASTNAME").val(),
+            PASSWORD:$("#PASSWORD").val(),
+            CONFORMPASSWORD:$("#CONFORMPASSWORD").val(),
+            EMAILID: $("#EMAILID").val(),
+            MOBILENUMBER: $("#MOBILENUMBER").val(),
+
+        }
+        var json = JSON.stringify(object);
+        
+
+        $.ajax({
+            type: "GET",
+            url: "createUserpost",
+            data: json,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (msg) {
+                alert('In Ajax');
+            }
+        });
+        
+
+    }
+</script>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
