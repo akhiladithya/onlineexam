@@ -16,7 +16,7 @@ namespace onlineexams
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "onlineExamUI", action = "Login", id = UrlParameter.Optional }
+                defaults: new { controller = "LoginUI", action = "Login", id = UrlParameter.Optional }
             );
         }
     }

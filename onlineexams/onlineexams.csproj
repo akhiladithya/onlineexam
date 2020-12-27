@@ -137,11 +137,15 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\layoutController.cs" />
+    <Compile Include="Controllers\LoginAPIController.cs" />
+    <Compile Include="Controllers\LoginUIController.cs" />
     <Compile Include="Controllers\onlineexamAPIController.cs" />
     <Compile Include="Controllers\onlineExamUIController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Loginclasses.cs" />
+    <Compile Include="Models\Logindb.cs" />
     <Compile Include="Models\Onlineexamclass.cs" />
     <Compile Include="Models\Onlineexamdbclass.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -2343,6 +2347,7 @@
     <Content Include="Views\onlineExamUI\Register.cshtml" />
     <Content Include="Views\onlineExamUI\getuser.cshtml" />
     <Content Include="Views\onlineExamUI\forgotpassword.cshtml" />
+    <Content Include="Views\LoginUI\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

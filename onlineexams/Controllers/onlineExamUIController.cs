@@ -60,6 +60,25 @@ namespace onlineexams.Controllers
             return Json(dd, JsonRequestBehavior.AllowGet);
             
         }
+        public string getip()//No use
+        {
+            string ip = "";
+            System.Web.HttpContext context = System.Web.HttpContext.Current;
+            string IPAddress = context.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
+            if (!string.IsNullOrEmpty(IPAddress))
+            {
+                string[] addresses = IPAddress.Split(',');
+                if (addresses.Length != 0)
+                {
+                    ViewData["data"] = addresses[0];
+                    ip = addresses[0];
+                }
 
+            }
+            ViewData["data11"] = context.Request.ServerVariables["REMOTE_ADDR"];
+            // ip="10.10.10.65";
+            // return ip;
+            return ViewData["data11"].ToString();
+        }
     }
 }

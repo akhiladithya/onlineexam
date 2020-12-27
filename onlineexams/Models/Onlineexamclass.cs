@@ -25,6 +25,10 @@ namespace onlineexams.Models
            public string MOBILENUMBER { get; set; }
             public string LASTLOGINTIME { get; set; }
             public string STATUS { get; set; }
+            public string Role { get; set; }
+            public string AAdharnumber { get; set; }
+            public string uniqueid { get; set; }
+            public string createdate { get; set; }
         }
         public class Coursereg
         {
