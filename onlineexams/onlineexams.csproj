@@ -2316,11 +2316,14 @@
     <Content Include="plugins\sweetalert2-theme-bootstrap-4\bootstrap-4.scss" />
     <Content Include="plugins\toastr\toastr.js.map" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-ui-1.12.1.js" />
+    <Content Include="Scripts\jquery-ui.css" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -2343,11 +2346,13 @@
     <Content Include="Views\layout\Index.cshtml" />
     <Content Include="Views\Shared\_LayoutPage1.cshtml" />
     <Content Include="Views\layout\data.cshtml" />
-    <Content Include="Views\onlineExamUI\Login.cshtml" />
     <Content Include="Views\onlineExamUI\Register.cshtml" />
     <Content Include="Views\onlineExamUI\getuser.cshtml" />
     <Content Include="Views\onlineExamUI\forgotpassword.cshtml" />
     <Content Include="Views\LoginUI\Login.cshtml" />
+    <Content Include="Views\onlineExamUI\CourseRegistration.cshtml" />
+    <Content Include="Views\onlineExamUI\UpadateCourse.cshtml" />
+    <Content Include="Views\onlineExamUI\GetusersList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

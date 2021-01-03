@@ -31,7 +31,7 @@ namespace onlineexams.Models
                 SqlCommand cmd = new SqlCommand("Insert_USERREGISTRATION", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@FINAME", userreg.FIRSTNAME);
-                cmd.Parameters.AddWithValue("@LASTNAME ", userreg.LASTNAME);
+                cmd.Parameters.AddWithValue("@LASTNAME ", userreg.LASTNAME);//it is related to aadharnumber property
                 cmd.Parameters.AddWithValue("@PASSWORD", userreg.PASSWORD);
                 cmd.Parameters.AddWithValue("@CONFORMPASSWORD", userreg.CONFORMPASSWORD);
                 cmd.Parameters.AddWithValue("@EMAILID", userreg.EMAILID);
@@ -76,10 +76,13 @@ namespace onlineexams.Models
                 cmd.Parameters.AddWithValue("@COURSEPERIOD", coureg.COURSEPERID);
                 cmd.Parameters.AddWithValue("@COURSEFROMDATE", coureg.COURSEFROMDATE);
                 cmd.Parameters.AddWithValue("@COURSETODATE", coureg.COURSETODATE);
-                cmd.Parameters.AddWithValue("@NUMBEROSQUETIONS", coureg.NUMBEROSQUETIONS);
+                //cmd.Parameters.AddWithValue("@NUMBEROSQUETIONS", coureg.NUMBEROSQUETIONS);
                 cmd.Parameters.AddWithValue("@NUMBEROFDAYS", coureg.NUMBEROFDAYS);
                 cmd.Parameters.AddWithValue("@TOTALMARKS", coureg.TOTALMARKS);
-                cmd.Parameters.AddWithValue("@STATUS", coureg.STATUS);
+                cmd.Parameters.AddWithValue("@STATUS", "ACTIVE");
+                cmd.Parameters.AddWithValue("@DESCRIPTION", coureg.Description);
+                cmd.Parameters.AddWithValue("@COURSEAMOUNT", coureg.COURSEAMOUNT);
+                cmd.Parameters.AddWithValue("@TRAINER", coureg.TRAINERNAME);
                 Connection();
                 int i = cmd.ExecuteNonQuery();
                 if (i > 0)
@@ -261,14 +264,16 @@ namespace onlineexams.Models
                 while(dr.Read())
                 {
                     userreglst1 = new Userregistration();
-                    userreglst1.Userid = dr["USERID"] != null ?Convert.ToInt32(dr["USERID"]) : 0;
-                    userreglst1.FIRSTNAME = dr["FIRSTNAME"] != null ? dr["FIRSTNAME"].ToString() : "";
-                    userreglst1.LASTNAME = dr["LASTNAME"] != null ? dr["LASTNAME"].ToString() : "";
+                    userreglst1.Userid = dr["USER_ID"] != null ?Convert.ToInt32(dr["USER_ID"]) : 0;
+                    userreglst1.FIRSTNAME = dr["Username"] != null ? dr["Username"].ToString() : "";
+                    //userreglst1.LASTNAME = dr["LASTNAME"] != null ? dr["LASTNAME"].ToString() : "";
                     userreglst1.PASSWORD = dr["PASSWORD"] != null ? dr["PASSWORD"].ToString() : "";
-                    userreglst1.CONFORMPASSWORD = dr["CONFORMPASSWORD"] != null ? dr["CONFORMPASSWORD"].ToString() : "";
-                    userreglst1.EMAILID = dr["EMAILID"] != null ? dr["EMAILID"].ToString() : "";
-                    userreglst1.MOBILENUMBER = dr["MOBILENUMBER"] != null ? dr["MOBILENUMBER"].ToString() : "";
+                    userreglst1.CONFORMPASSWORD = dr["CONFIRMPASSWORD"] != null ? dr["CONFIRMPASSWORD"].ToString() : "";
+                    userreglst1.EMAILID = dr["EMAIL_ID"] != null ? dr["EMAIL_ID"].ToString() : "";
+                    userreglst1.MOBILENUMBER = dr["MOBILE_NUMBER"] != null ? dr["MOBILE_NUMBER"].ToString() : "";
+                    userreglst1.AAdharnumber= dr["AADHARNUMBER"] != null ? dr["AADHARNUMBER"].ToString() : "";
                     userreglst1.LASTLOGINTIME= dr["LASTLOGINTIME"] != null ? dr["LASTLOGINTIME"].ToString() : "";
+                    userreglst1.LASTLOGINTIME= dr["ROLE"] != null ? dr["ROLE"].ToString() : "";
                     userreglst1.STATUS = dr["STATUS"] != null ? dr["STATUS"].ToString() : "";
                     userreglist.Add(userreglst1);
                 }
@@ -308,6 +313,9 @@ namespace onlineexams.Models
                     coureglist1.NUMBEROFDAYS= dr["NUMBEROFDAYS"] != null ? dr["NUMBEROFDAYS"].ToString() : "";
                     coureglist1.TOTALMARKS = dr["TOTALMARKS"] != null ? dr["TOTALMARKS"].ToString() : "";
                     coureglist1.STATUS = dr["STATUS"] != null ? dr["STATUS"].ToString() : "";
+                    coureglist1.Description = dr["COURSEDESCRIPTION"] != null ? dr["COURSEDESCRIPTION"].ToString() : "";
+                    coureglist1.TRAINERNAME = dr["COURSETRAINER"] != null ? dr["COURSETRAINER"].ToString() : "";
+                    coureglist1.COURSEAMOUNT = dr["COURSEAMOUNT"] != null ? dr["COURSEAMOUNT"].ToString() : "";
                     coureglist.Add(coureglist1);
                 }
                 return coureglist;
@@ -502,6 +510,44 @@ namespace onlineexams.Models
             }
         }
         #endregion
+
+        #region Course Update
+        public Outputclass Update_Course(Coursereg coureg)
+        {
+            Outputclass outputclass = new Outputclass();
+            try
+            {
+                SqlCommand cmd = new SqlCommand("UPDATECOURSE", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@CName", coureg.COURSENAME);
+                cmd.Parameters.AddWithValue("@CNOOFD", coureg.COURSEPERID);
+                cmd.Parameters.AddWithValue("@CSTDT", coureg.COURSEFROMDATE);
+                cmd.Parameters.AddWithValue("@CEDT", coureg.COURSETODATE);
+                cmd.Parameters.AddWithValue("@CDES", coureg.Description);
+                cmd.Parameters.AddWithValue("@CAMT", coureg.COURSEAMOUNT);
+                cmd.Parameters.AddWithValue("@CTRAINERNAME", coureg.TRAINERNAME);
+                cmd.Parameters.AddWithValue("@STATUS", coureg.STATUS);
+                Connection();
+                int i = cmd.ExecuteNonQuery();
+                if (i > 0)
+                {
+                    outputclass.Count = i;
+                }
+                return outputclass;
+            }
+            catch (Exception ex)
+            {
+
+                outputclass.Msg = ex.ToString();
+                return outputclass;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+        #endregion
+
 
     }
 }

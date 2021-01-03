@@ -103,5 +103,16 @@ namespace onlineexams.Controllers
         }
         #endregion
 
+        #region Course Update
+        [HttpPost]
+        public Outputclass Update_Course_(Coursereg coureg)
+        {
+            return dbcls.Update_Course(coureg);
+        }
+        #endregion
+
+
+
+
     }
 }

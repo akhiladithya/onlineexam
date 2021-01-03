@@ -4,5 +4,32 @@
     Layout = "~/Views/Shared/_LayoutPage1.cshtml";
 }
 
-<h2>data</h2>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Greeting Message</title>
+</head>
+<body>
+    <label id="lblGreetings" style="vertical-align: middle;"></label>
+</body>
+
+
+</html>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script>
+    var myDate = new Date();
+    var hrs = myDate.getHours();
+
+    var greet;
+
+    if (hrs < 12)
+        greet = 'Good Morning';
+    else if (hrs >= 12 && hrs <= 17)
+        greet = 'Good Afternoon';
+    else if (hrs >= 17 && hrs <= 24)
+        greet = 'Good Evening';
+
+    document.getElementById('lblGreetings').innerHTML =
+        '<b>' + greet + '</b> and welcome to Online Trainee.......!' 
+</script>
 

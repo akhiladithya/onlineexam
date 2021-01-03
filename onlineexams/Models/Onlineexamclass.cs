@@ -41,9 +41,18 @@ namespace onlineexams.Models
             public string NUMBEROSQUETIONS { get; set; }
             public string NUMBEROFDAYS { get; set; }
             public string TOTALMARKS { get; set; }
+            public string Description{ get; set; }
+            public string COURSEAMOUNT { get; set; }
+            public string TRAINERNAME { get; set; }
             public string STATUS { get; set; }
         }
-        public class Questioneries
+
+    public class Courselist
+    {
+        public List<Coursereg> lst { get; set; }
+        public int count { get; set; }
+    }
+    public class Questioneries
         {
             public int? COURSEID { get; set; }
             public int? QUESTIONID { get; set; }
@@ -97,8 +106,12 @@ namespace onlineexams.Models
         public string Type { get; set; }
         public string userid { get; set; }
         public string AAdhar { get; set; }
-    }
+        }
+        public class Userslist
+        {
+            public List<Userregistration> lst { get; set; }
+            public int count { get; set; }
+        }
 
-    
-    
+
 }

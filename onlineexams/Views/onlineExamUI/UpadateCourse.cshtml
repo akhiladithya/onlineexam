@@ -1,0 +1,179 @@
+﻿@model onlineexams.Models.Coursereg
+
+@{
+    ViewBag.Title = "UpadateCourse";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+}
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+@*<link rel="stylesheet" href="/resources/demos/style.css">*@
+@*<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>*@
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<script src="~/Scripts/jquery-ui-1.12.1.js"></script>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="card card-default">
+            <div class="card-header" style="background-color:darkturquoise;color:WHITE;">
+                <h3 class="card-title">Update Course Registration</h3>
+
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-remove"></i></button>
+                </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+
+                <div class="col-md-12">
+                    <div class="card-body mainbox col-md-10">
+                        <div class="form-group">
+                            <div class="col-md-6">
+                                <label>Course Name</label>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" value="@Model.COURSENAME" id="cid" readonly />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-6">
+                                <label>Course Description</label>
+                            </div>
+                            <div class="col-md-6">
+                                @*<input type="text" class="form-control" value="@Model.Description" id="cdes" />*@
+                                <textarea id="cdes" class="form-control" rows="4">@Model.Description</textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-6">
+                                <label>Course Amount</label>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" value="@Model.COURSEAMOUNT" id="camt" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-6">
+                                <label>Course Start Date</label>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" value="@Model.COURSEFROMDATE" id="csd" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-6">
+                                <label>Course Number Of Days</label>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" value="@Model.COURSEPERID" id="cnod" onkeyup="dd()" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-6">
+                                <label>Course End Date</label>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" value="@Model.COURSETODATE" id="ced" readonly />
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <div class="col-md-6">
+                                <label>Course Trainer Name</label>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" value="@Model.TRAINERNAME" id="ctr" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-6">
+                                <label>Status</label>
+                            </div>
+                            <div class="col-md-6">
+                                <select id="status" class="form-control">
+                                    <option value="ACTIVE">ACTIVE</option>
+                                    <option value="DE-ACTIVE">DE-ACTIVE</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <br />
+                        <div class="row">
+                            <div class="col-md-9">
+
+                                <div><input type="button" value="submit" onclick="update()" /></div>
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                   
+                </div>
+                    <!-- /.card-body -->
+
+                </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    $(function () {
+        //$("#example1").DataTable();
+        //$("#click").click();
+        $("#csd").datepicker({
+            minDate: 0,
+            onSelect: function (dateStr) {
+                $(this).focus();
+                //ValidateToDate()
+                //Validate2();
+            },
+            dateFormat: 'dd-mm-yy',
+        });
+
+    });
+</script>
+<script>
+    
+        function dd() {
+            $('#ced').val("");
+        //var dd1 = "";
+        debugger
+            var date = new Date($("#csd").val()),
+                days = parseInt($("#cnod").val(), 10);
+        date.setDate(date.getDate() + days);
+
+        debugger
+        var date1 = new Date(date),
+
+            mnth = ("0" + (date1.getMonth() + 1)).slice(-2),
+            day = ("0" + date1.getDate()).slice(-2);
+        year = date1.getFullYear();
+        var ddd = [date.getFullYear(), mnth, day].join("-");
+        var dd1 = [day, mnth, date.getFullYear(),].join("-");
+        //dd1 = day + "-" + mnth + "-" + year;
+
+        var dd2 = dd1 != "aN-aN-NaN" ? dd1 : "";
+
+
+            $('#ced').val(dd2);
+
+    };
+</script>
+<script>
+    function update() {
+        $.post("@Url.Content("~/onlineExamUI/Updatecoursereg")", { COURSENAME: $("#cid").val(), COURSEPERID: $("#cnod").val(), COURSEFROMDATE: $("#csd").val(), COURSETODATE: $("#ced").val(), COURSEAMOUNT: $("#camt").val(), Description: $("#cdes").val(), TRAINERNAME: $("#ctr").val(), STATUS: $("#status").val() }, function (data)
+        {
+           
+            alert("Course Updated Successfully ...!");
+            
+        });
+
+    }
+</script>
+
+
