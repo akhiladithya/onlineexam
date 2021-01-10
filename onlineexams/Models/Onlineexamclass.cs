@@ -44,6 +44,7 @@ namespace onlineexams.Models
             public string Description{ get; set; }
             public string COURSEAMOUNT { get; set; }
             public string TRAINERNAME { get; set; }
+            public string COURSEIMPORTANCE { get; set; }
             public string STATUS { get; set; }
         }
 

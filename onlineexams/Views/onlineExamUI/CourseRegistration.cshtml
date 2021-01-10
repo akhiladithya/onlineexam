@@ -11,19 +11,88 @@
 
 
 <!-- DataTables -->
+
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<link href="~/overlay2.css" rel="stylesheet" />
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+
 @**@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 @*<link rel="stylesheet" href="/resources/demos/style.css">*@
-@*<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>*@
-<script src="~/Scripts/jquery-3.3.1.js"></script>
-<script src="~/Scripts/jquery-ui-1.12.1.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+@*<script src="~/Scripts/jquery-3.3.1.js"></script>
+    <script src="~/Scripts/jquery-ui-1.12.1.js"></script>*@
 @*<link href="~/Scripts/jquery-ui.css" rel="stylesheet" />*@
 
+<style>
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+
+    span.span3 {
+        display: block;
+        color: red;
+        float: right;
+        top: -27px;
+        margin: 0 0 0 20px;
+        padding: 3px 10px;
+        color: #CE5454;
+        border-radius: 3px 4px 4px 3px;
+        /*background-color: #CE5454;*/
+        max-width: 280px;
+        position: relative;
+        margin-bottom: -20px;
+        opacity: 3;
+        left: 200px;
+    }
+
+   
+    .table thead,
+    .table th {
+        text-align: center;
+    }
+
+  
+</style>
+
 <script>
+    var check = "";
     $(function () {
         $("#example1").DataTable();
-         $("#click").click();
+        $("#click").click();
+        $('.space').on('keydown', function (e) {
+            if (e.which === 32 && e.target.selectionStart === 0) {
+                return false;
+            }
+        });
+        $(".space").on("keyup", function () {
+            if ($(this).val() != "") {
+                $(this).next("span").remove();
+
+                $(this).css('border', '');
+            }
+            else {
+                
+                    $(this).next("span").remove();
+
+                    $(this).css('border', '1px solid red');
+                
+            }
+        });
+        //$("#inputName").val(""),
+        //$("#ndays").val(""),
+        //COURSEFROMDATE: $("#startdate").val(), COURSETODATE: $("#enddate").val(), COURSEAMOUNT: $("#camt").val(), Description: $("#inputDescription").val(), TRAINERNAME: $("#Trainer").val()
+
         $("#startdate").datepicker({
             minDate: 0,
             onSelect: function (dateStr) {
@@ -36,24 +105,57 @@
 
     });
 </script>
+<script>
+
+</script>
 @*<script src="~/Scripts/jquery-3.4.1.min.js"></script>*@
 <script>
+    //function dd() {
+    //    $('#enddate').val("");
+    //    //var dd1 = "";
+    //    debugger
+    //    var date = new Date($("#startdate").val());
+    //        days = parseInt($("#ndays").val(), 10);
+    //    date.setDate(date.getDate() + days);
+
+    //    debugger
+    //    var date1 = new Date(date),
+
+    //        mnth = ("0" + (date1.getMonth() + 1)).slice(-2),
+    //        day = ("0" + date1.getDate()).slice(-2);
+    //    year = date1.getFullYear();
+    //    var ddd = [date.getFullYear(), mnth, day].join("-");
+    //    var dd1 = [day, mnth, date.getFullYear(),].join("-");
+    //    //dd1 = day + "-" + mnth + "-" + year;
+
+    //    var dd2 = dd1 != "aN-aN-NaN" ? dd1 : "";
+
+
+    //    $('#enddate').val(dd2);
+
+    //};
+
     function dd() {
         $('#enddate').val("");
         //var dd1 = "";
         debugger
-        var date = new Date($("#startdate").val()),
-            days = parseInt($("#ndays").val(), 10);
-        date.setDate(date.getDate() + days);
+        days = parseInt($("#ndays").val(), 10);
+        var from = $("#startdate").val().split("-")
+        var f = new Date(from[2], from[1] - 1, from[0])
+        f.setDate(f.getDate() + days);
+        //var m = (f.getDate()<10?'0':")+
+        //var date = new Date($("#startdate").val()),
+
+        // date.setDate(date.getDate() + days);
 
         debugger
-        var date1 = new Date(date),
+        var date1 = new Date(f),
 
             mnth = ("0" + (date1.getMonth() + 1)).slice(-2),
             day = ("0" + date1.getDate()).slice(-2);
         year = date1.getFullYear();
-        var ddd = [date.getFullYear(), mnth, day].join("-");
-        var dd1 = [day, mnth, date.getFullYear(),].join("-");
+        // var ddd = [date.getFullYear(), mnth, day].join("-");
+        var dd1 = [day, mnth, date1.getFullYear(),].join("-");
         //dd1 = day + "-" + mnth + "-" + year;
 
         var dd2 = dd1 != "aN-aN-NaN" ? dd1 : "";
@@ -65,16 +167,106 @@
 </script>
 
 <script>
+    function Reload() {
+        window.location.href = ("CourseRegistration");
+    }
+</script>
+
+<script>
     function coursepost() {
-        $.post("@Url.Content("~/onlineExamUI/coursepost")", {
-            COURSENAME: $("#inputName").val(), COURSEPERID: $("#ndays").val(), COURSEFROMDATE: $("#startdate").val(), COURSETODATE: $("#enddate").val(), COURSEAMOUNT: $("#camt").val(), Description: $("#inputDescription").val(), TRAINERNAME: $("#Trainer").val()
-        }, function (data) {
-            alert('Course Registered Successfully Completed...!')
-           // window.location.href='@Url.Content("~/MastersUI/UpdatePlantMaster")'
-        })
+        if ($("#inputName").val() != "" && $("#ndays").val() != "" && $("#startdate").val() != "" && $("#enddate").val() != "" && $("#camt").val() != "" && $("#inputDescription").val() != "" && $("#Trainer").val() != "" && check == true) {
+            $.post("@Url.Content("~/onlineExamUI/coursepost")", { COURSENAME: $("#inputName").val(), COURSEPERID: $("#ndays").val(), COURSEFROMDATE: $("#startdate").val(), COURSETODATE: $("#enddate").val(), COURSEAMOUNT: $("#camt").val(), Description: $("#inputDescription").val(), TRAINERNAME: $("#Trainer").val(), COURSEIMPORTANCE: $("#Importance").val() }, function (data) {
+                debugger
+                if (data == "1") {
+                    $("#popup").click();
+                    $("#popuph1").text("Success");
+                    $("#popuph1").css("color", "green");
+                    $("#popupp").text("Course Registration Completed Successfully...!");
+                    $("#btnok").show();
+                    $("#btnclose").css("Display", "none");
+                        
+                }
+                else {
+                    $("#popup").click();
+                    $("#popuph1").text("Failed");
+                    $("#popuph1").css("color", "red");
+                    $("#popupp").text("Something Went Wrong....");
+                   $("#btnok").css("Display", "none");
+                    $("#btnclose").show();
+                }
+            })
+        }
+        else {
+            debugger
+            $('#dic input[type=text]').each(function () {
+                if ($(this).val() == "") {
+                    $(this).next("span").remove();
+
+                    $(this).css('border', '1px solid red');
+                }
+            });
+            $('#dic input[type=number]').each(function () {
+                if ($(this).val() == "") {
+                    $(this).next("span").remove();
+
+                    $(this).css('border', '1px solid red');
+                }
+            });
+            $('#dic textarea').each(function () {
+                if ($(this).val() == "") {
+                    $(this).next("span").remove();
+
+                    $(this).css('border', '1px solid red');
+                }
+            });
+
+            //if ($("#inputName").val() == "") {
+            //    $("#inputName").next("span").remove();
+               
+            //    $("#inputName").css('border', '1px solid red');
+            //}
+            //if ($("#inputDescription").val() == "") {
+            //    $("#inputDescription").next("span").remove();
+               
+            //    $("#inputDescription").css('border', '1px solid red');
+            //}
+            //if ($("#ndays").val() == 0) {
+            //    $("#ndays").next("span").remove();
+               
+            //    $("#ndays").css('border', '1px solid red');
+            //}
+            //if ($("#camt").val() == 0) {
+            //    $("#camt").next("span").remove();
+               
+            //    $("#camt").css('border', '1px solid red');
+            //}
+            //if ($("#startdate").val() == "") {
+            //    $("#startdate").next("span").remove();
+               
+            //    $("#startdate").css('border', '1px solid red');
+            //}
+            //if ($("#Trainer").val() == "") {
+            //    $("#Trainer").next("span").remove();
+              
+            //    $("#Trainer").css('border', '1px solid red');
+            //}
+            //if ($("#Importance").val() == "") {
+            //    $("#Importance").next("span").remove();
+               
+            //    $("#Importance").css('border', '1px solid red');
+            //}
+            
+            $("#popup").click();
+            $("#popuph1").text("Warining..?");
+            $("#popuph1").css("color", "Yellow");
+            $("#popupp").text("Please Enter All Mandatory fields");
+            $("#btnok").css("Display", "none");
+          //  $("#btnclose").css("Display", "block");
+            $("#btnclose").show();
+        }
     }
 
-   
+
 
 </script>
 <script>
@@ -91,63 +283,73 @@
 </script>
 
 
+
 <section class="content">
 
-    <div class="col-md-12">
+    <div class="col-md-12" id="container">
         <div class="card card-primary">
             <div class="card-header">
                 <h3 class="card-title">Course Registration</h3>
 
                 <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                    <button type="button" class="btn btn-tool dd" data-card-widget="collapse" data-toggle="tooltip" title="Add Course">
                         <i class="fas fa-minus" id="click"></i>
                     </button>
                 </div>
             </div>
-            <div class="card-body mainbox col-md-10">
+            <div class="card-body mainbox col-md-10" id="dic">
                 <div class="form-group">
 
                     <div class="col-md-6">
-                        <label for="inputName" class="col-form-label">Course Name</label>
+                        <label for="inputName" class="col-form-label">Course Name</label><span style="color:red">*</span>
                     </div>
                     @*<label for="inputName">Course Name</label>*@
-                    <div class="col-md-6">
-                        <input type="text" id="inputName" class="form-control">
-                    </div>
+                <div class="col-md-6">
+                    <input type="text" id="inputName" onkeyup="isexist()" class="form-control space"  maxlength="15" >
+                    <font id="vcoursename" style="color:red ;display:none"></font>
+                </div>
+                   
 
                 </div>
                 <div class="form-group">
                     <div class="col-md-6">
-                        <label for="inputDescription">Course Description</label>
+                        <label for="inputDescription">Course Description</label><span style="color:red">*</span>
                     </div>
                     <div class="col-md-6">
 
-                        <textarea id="inputDescription" class="form-control" rows="4"></textarea>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="col-md-6">
-                        <label for="camt">Course Amount</label>
-                    </div>
-                    <div class="col-md-6">
-                        <input type="text" id="camt" class="form-control">
+                        <textarea id="inputDescription" class="form-control space" rows="4"></textarea>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-6">
-                        <label for="startdate">Course Start Date</label>
+                        <label for="Importance">Course Importance</label><span style="color:red">*</span>
                     </div>
                     <div class="col-md-6">
-                        <input type="text" id="startdate" class="form-control datepic1">
+                        <textarea id="Importance" class="form-control space" rows="4"></textarea>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-6">
-                        <label for="ndays">No.of Days</label>
+                        <label for="camt">Course Amount</label><span style="color:red">*</span>
                     </div>
                     <div class="col-md-6">
-                        <input type="text" id="ndays" class="form-control" onkeyup="dd()">
+                        <input type="number" id="camt" class="form-control space">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-6">
+                        <label for="startdate">Course Start Date</label><span style="color:red">*</span>
+                    </div>
+                    <div class="col-md-6">
+                        <input type="text" id="startdate" class="form-control datepic1 space">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-6">
+                        <label for="ndays">No.of Days</label><span style="color:red">*</span>
+                    </div>
+                    <div class="col-md-6">
+                        <input type="number" id="ndays" class="form-control space" onkeyup="dd()">
                     </div>
                 </div>
                 <div class="form-group">
@@ -160,21 +362,25 @@
                 </div>
                 <div class="form-group">
                     <div class="col-md-6">
-                        <label for="Trainer">Course Trainer Name</label>
+                        <label for="Trainer">Course Trainer Name</label><span style="color:red">*</span>
                     </div>
                     <div class="col-md-6">
-                        <input type="text" id="Trainer" class="form-control">
+                        <input type="text" id="Trainer" class="form-control space">
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div><input type="button" value="submit" onclick="coursepost()" /></div>
 
-                    </div>
-
-                </div>
+               
                 <!-- /.card-body -->
 
+            </div>
+            <div class="card-footer">
+                
+                   
+                        <input type="button" value="Submit" class="btn btn-success" onclick="coursepost()" />
+
+                   
+
+               
             </div>
             <!-- /.card -->
         </div>
@@ -186,12 +392,12 @@
 
 
 <div class="card">
-    <div class="card-header">
-        <h2 class="card-title">Course Details</h2>
+    <div class="card-header" style="background-color:aliceblue">
+        <h3 class="card-title" >Course Details</h3>
     </div>
     <!-- /.card-header -->
     <div class="card-body">
-        <table id="example1" class="table table-bordered table-striped">
+        <table id="example1" class="table table-bordered table-striped table-responsive table-primary">
             <thead>
                 <tr>
                     <th hidden>Course ID</th>
@@ -202,6 +408,7 @@
                     <th>Course Period</th>
                     <th>Course Price</th>
                     <th>Course Trainer Name</th>
+                    <th>Course Importance</th>
                     <th hidden>Course Status</th>
                     <th>PreView</th>
                 </tr>
@@ -210,22 +417,23 @@
 
                 @foreach (var item in Model.lst)
                 {
-                <tr class="tbhhover" @*onclick="setareamasterid(@item.ID)"*@>
-                    <td hidden>@item.Courseid</td>
-                    <td>@item.COURSENAME</td>
-                    <td>@item.Description</td>
-                    <td>@item.COURSEFROMDATE</td>
-                    <td>@item.COURSETODATE</td>
-                    <td>@item.COURSEPERID</td>
-                    <td>@item.COURSEAMOUNT</td>
-                    <td>@item.TRAINERNAME</td>
-                    <td hidden>@item.STATUS</td>
-                    <td><i style="" onclick="update(@item.Courseid)" class="fa fa-edit">[PREVIEW]</i></td>
-                </tr>
-                 }
+                    <tr class="tbhhover" @*onclick="setareamasterid(@item.ID)"*@>
+                        <td hidden>@item.Courseid</td>
+                        <td>@item.COURSENAME</td>
+                        <td>@item.Description</td>
+                        <td>@item.COURSEFROMDATE</td>
+                        <td>@item.COURSETODATE</td>
+                        <td>@item.COURSEPERID</td>
+                        <td>@item.COURSEAMOUNT</td>
+                        <td>@item.TRAINERNAME</td>
+                        <td>@item.COURSEIMPORTANCE</td>
+                        <td hidden>@item.STATUS</td>
+                        <td><i style="" onclick="update(@item.Courseid)" class="fa fa-edit">[PREVIEW]</i></td>
+                    </tr>
+                }
 
-                    
-                </tbody>
+
+            </tbody>
             <tfoot>
                 <tr>
                     <th hidden>Course ID</th>
@@ -236,14 +444,70 @@
                     <th>Course Period</th>
                     <th>Course Price</th>
                     <th>Course Trainer Name</th>
-                    <th>Course Status</th>
-                    <th hidden>PreView</th>
+                    <th>Course Importance</th>
+                    <th hidden>Course Status</th>
+                    <th>PreView</th>
                 </tr>
             </tfoot>
         </table>
     </div>
     <!-- /.card-body -->
 </div>
+<div class="container">
+    <div class="row">
+        <a class="btn btn-primary" id="popup" data-toggle="modal" style="display:none" href="#ignismyModal">open Popup</a>
+        <div class="modal fade" id="ignismyModal" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        @*<button type="button" class="close" data-dismiss="modal" aria-label=""><span>×</span></button>*@
+                    </div>
+
+                    <div class="modal-body">
+
+                        <div class="thank-you-pop">
+                            @*<img src="http://goactionstations.co.uk/wp-content/uploads/2017/03/Green-Round-Tick.png" alt="">*@
+                            <h1 id="popuph1"> Success</h1>
+                            <p id="popupp"> </p>
+                            <!--<h3 class="cupon-pop">-->@*Your Id: <span>12345</span>*@<!--</h3>-->
+                            <button id="btnok" class="close" style="display:none" onclick="Reload()">OK</button>
+                            <button id="btnclose" class="close" style="display:none" data-dismiss="modal">OK</button>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function isexist() {
+        $.get("@Url.Content("~/onlineExamUI/Course_Isexistornot?cname=")" + $("#inputName").val(), function (data) {
+            debugger
+            //alert(data);
+            check = data;
+            if ($("#inputName").val() != "") {
+                if (data == false) {
+                    $("#vcoursename").css("display", "block");
+                    $("#vcoursename").css("color", "red");
+                    $("#vcoursename").text("Course name is not avaliable");
+
+                }
+                else {
+                    $("#vcoursename").css("display", "block");
+                    $("#vcoursename").css("color", "green");
+                    $("#vcoursename").text("Course name is avaliable");
+                }
+            }
+            else {
+                $("#vcoursename").css("display", "none");
+            }
+
+        });
+    }
+</script>
 
 
 <!-- Bootstrap 4 -->

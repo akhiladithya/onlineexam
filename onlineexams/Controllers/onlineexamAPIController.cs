@@ -62,6 +62,15 @@ namespace onlineexams.Controllers
             return dbcls.CourseRegistration_data();
         }
         #endregion
+        #region Course Name Exists or not
+        public bool Course_Isexistornot(string cname)
+        {
+            return dbcls.Course_Isexistornot(cname);
+        }
+        #endregion
+
+
+
 
         #region QUESTIONERIES data
         [HttpGet]

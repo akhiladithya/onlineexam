@@ -1,4 +1,4 @@
-﻿@model onlineexams.Models.Userregistration
+﻿@model onlineexams.Models.Userslist
 
 @{
     ViewBag.Title = "GetusersList";
@@ -21,191 +21,48 @@
 <script src="~/Scripts/jquery-3.3.1.js"></script>
 <script src="~/Scripts/jquery-ui-1.12.1.js"></script>
 @*<link href="~/Scripts/jquery-ui.css" rel="stylesheet" />*@
-
+<style>
+    .table thead,
+    .table th {
+        text-align: center;
+    }
+</style>
 <script>
     $(function () {
         $("#example1").DataTable();
-         $("#click").click();
-        $("#startdate").datepicker({
-            minDate: 0,
-            onSelect: function (dateStr) {
-                $(this).focus();
-                //ValidateToDate()
-                //Validate2();
-            },
-            dateFormat: 'dd-mm-yy',
-        });
+        // $("#click").click();
+       
 
     });
 </script>
-@*<script src="~/Scripts/jquery-3.4.1.min.js"></script>*@
-<script>
-    function dd() {
-        $('#enddate').val("");
-        //var dd1 = "";
-        debugger
-        var date = new Date($("#startdate").val()),
-            days = parseInt($("#ndays").val(), 10);
-        date.setDate(date.getDate() + days);
 
-        debugger
-        var date1 = new Date(date),
-
-            mnth = ("0" + (date1.getMonth() + 1)).slice(-2),
-            day = ("0" + date1.getDate()).slice(-2);
-        year = date1.getFullYear();
-        var ddd = [date.getFullYear(), mnth, day].join("-");
-        var dd1 = [day, mnth, date.getFullYear(),].join("-");
-        //dd1 = day + "-" + mnth + "-" + year;
-
-        var dd2 = dd1 != "aN-aN-NaN" ? dd1 : "";
+    
 
 
-        $('#enddate').val(dd2);
-
-    };
-</script>
-
-<script>
-    function coursepost() {
-        $.post("@Url.Content("~/onlineExamUI/coursepost")", {
-            COURSENAME: $("#inputName").val(), COURSEPERID: $("#ndays").val(), COURSEFROMDATE: $("#startdate").val(), COURSETODATE: $("#enddate").val(), COURSEAMOUNT: $("#camt").val(), Description: $("#inputDescription").val(), TRAINERNAME: $("#Trainer").val()
-        }, function (data) {
-            alert('Course Registered Successfully Completed...!')
-           // window.location.href='@Url.Content("~/MastersUI/UpdatePlantMaster")'
-        })
-    }
-
-
-
-</script>
-<script>
-    function update(cid) {
-        alert(cid);
-        $.post("@Url.Content("~/onlineExamUI/setcoursid")", {cid: cid}, function (data) {
-            if (data == true) {
-                 window.location.href='@Url.Content("~/onlineExamUI/UpadateCourse")'
-            }
-
-        })
-    }
-
-</script>
 
 
 <section class="content">
 
-    <div class="col-md-12">
-        <div class="card card-primary">
-            <div class="card-header">
-                <h3 class="card-title">Course Registration</h3>
-
-                <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
-                        <i class="fas fa-minus" id="click"></i>
-                    </button>
-                </div>
-            </div>
-            <div class="card-body mainbox col-md-10">
-                <div class="form-group">
-
-                    <div class="col-md-6">
-                        <label for="inputName" class="col-form-label">Course Name</label>
-                    </div>
-                    @*<label for="inputName">Course Name</label>*@
-                    <div class="col-md-6">
-                        <input type="text" id="inputName" class="form-control">
-                    </div>
-
-                </div>
-                <div class="form-group">
-                    <div class="col-md-6">
-                        <label for="inputDescription">Course Description</label>
-                    </div>
-                    <div class="col-md-6">
-
-                        <textarea id="inputDescription" class="form-control" rows="4"></textarea>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="col-md-6">
-                        <label for="camt">Course Amount</label>
-                    </div>
-                    <div class="col-md-6">
-                        <input type="text" id="camt" class="form-control">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-6">
-                        <label for="startdate">Course Start Date</label>
-                    </div>
-                    <div class="col-md-6">
-                        <input type="text" id="startdate" class="form-control datepic1">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-6">
-                        <label for="ndays">No.of Days</label>
-                    </div>
-                    <div class="col-md-6">
-                        <input type="text" id="ndays" class="form-control" onkeyup="dd()">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-6">
-                        <label for="enddate">Course End Date</label>
-                    </div>
-                    <div class="col-md-6">
-                        <input type="text" id="enddate" class="form-control" readonly>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-6">
-                        <label for="Trainer">Course Trainer Name</label>
-                    </div>
-                    <div class="col-md-6">
-                        <input type="text" id="Trainer" class="form-control">
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div><input type="button" value="submit" onclick="coursepost()" /></div>
-
-                    </div>
-
-                </div>
-                <!-- /.card-body -->
-
-            </div>
-            <!-- /.card -->
-        </div>
-
-
-    </div>
+    
 
 </section>
 
 
 <div class="card">
     <div class="card-header">
-        <h2 class="card-title">Course Details</h2>
+        <h2 class="card-title">Users Details</h2>
     </div>
     <!-- /.card-header -->
     <div class="card-body">
-        <table id="example1" class="table table-bordered table-striped">
+        <table id="example1" class="table table-bordered table-striped table-primary">
             <thead>
-                <tr>
-                    <th hidden>Course ID</th>
-                    <th>Course Name</th>
-                    <th>Course Description</th>
-                    <th>Course Start Date</th>
-                    <th>Course End Date</th>
-                    <th>Course Period</th>
-                    <th>Course Price</th>
-                    <th>Course Trainer Name</th>
-                    <th hidden>Course Status</th>
-                    <th>PreView</th>
+                <tr style="align-content:center">
+                    <th>User ID</th>
+                    <th>User Name</th>
+                    <th>Mobile number</th>
+                    <th>Mail ID</th>
+                    <th>AADHAR</th>
+                   
                 </tr>
             </thead>
             <tbody>
@@ -213,16 +70,13 @@
                 @foreach (var item in Model.lst)
                 {
                     <tr class="tbhhover" @*onclick="setareamasterid(@item.ID)"*@>
-                        <td hidden>@item.Courseid</td>
-                        <td>@item.COURSENAME</td>
-                        <td>@item.Description</td>
-                        <td>@item.COURSEFROMDATE</td>
-                        <td>@item.COURSETODATE</td>
-                        <td>@item.COURSEPERID</td>
-                        <td>@item.COURSEAMOUNT</td>
-                        <td>@item.TRAINERNAME</td>
-                        <td hidden>@item.STATUS</td>
-                        <td><i style="" onclick="update(@item.Courseid)" class="fa fa-edit">[PREVIEW]</i></td>
+                        <td >@item.Userid</td>
+                        <td>@item.FIRSTNAME</td>
+                        
+                        <td>@item.MOBILENUMBER</td>
+                        <td>@item.EMAILID</td>
+                        <td>@item.AAdharnumber</td>
+                      
                     </tr>
                 }
 
@@ -230,16 +84,11 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <th hidden>Course ID</th>
-                    <th>Course Name</th>
-                    <th>Course Description</th>
-                    <th>Course Start Date</th>
-                    <th>Course End Date</th>
-                    <th>Course Period</th>
-                    <th>Course Price</th>
-                    <th>Course Trainer Name</th>
-                    <th>Course Status</th>
-                    <th hidden>PreView</th>
+                    <th>User ID</th>
+                    <th>User Name</th>
+                    <th>Mobile number</th>
+                    <th>Mail ID</th>
+                    <th>AADHAR</th>
                 </tr>
             </tfoot>
         </table>

@@ -5,12 +5,49 @@
     Layout = "~/Views/Shared/_LayoutPage1.cshtml";
 }
 
+@* Scripts Related to Popup messages from here*@
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<link href="~/overlay2.css" rel="stylesheet" />
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+@* Scripts Related to Popup messages upto*@
+
+
+
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 @*<link rel="stylesheet" href="/resources/demos/style.css">*@
 @*<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>*@
 <script src="~/Scripts/jquery-3.3.1.js"></script>
 <script src="~/Scripts/jquery-ui-1.12.1.js"></script>
+<style>
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+    span.span3 {
+        display: block;
+        color: red;
+        float: right;
+        top: -27px;
+        margin: 0 0 0 20px;
+        padding: 3px 10px;
+        color: #CE5454;
+        border-radius: 3px 4px 4px 3px;
+        /*background-color: #CE5454;*/
+        max-width: 280px;
+        position: relative;
+        margin-bottom: -20px;
+        opacity: 3;
+        left: 200px;
+    }
+</style>
 
 <section class="content">
     <div class="container-fluid">
@@ -27,7 +64,7 @@
             <div class="card-body">
 
                 <div class="col-md-12">
-                    <div class="card-body mainbox col-md-10">
+                    <div class="card-body mainbox  col-md-10" id="dic">
                         <div class="form-group">
                             <div class="col-md-6">
                                 <label>Course Name</label>
@@ -39,35 +76,47 @@
 
                         <div class="form-group">
                             <div class="col-md-6">
-                                <label>Course Description</label>
+                                <label>Course Description</label><span style="color:red">*</span>
                             </div>
                             <div class="col-md-6">
                                 @*<input type="text" class="form-control" value="@Model.Description" id="cdes" />*@
-                                <textarea id="cdes" class="form-control" rows="4">@Model.Description</textarea>
+                                <textarea id="cdes" class="form-control space" rows="4">@Model.Description</textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-6">
+                                <span style="color:red">*</span>
+                                <label>Course Importance</label>
+                            </div>
+                            <div class="col-md-6">
+                                @*<input type="text" class="form-control" value="@Model.Description" id="cdes" />*@
+                                <textarea id="Importance" class="form-control space" rows="4">@Model.COURSEIMPORTANCE</textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-6">
+                                <label>Course Amount</label><span style="color:red">*</span>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="number" class="form-control space" value="@Model.COURSEAMOUNT" id="camt" />
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-md-6">
-                                <label>Course Amount</label>
+                                <label>Course Start Date</label><span style="color:red">*</span>
                             </div>
                             <div class="col-md-6">
-                                <input type="text" class="form-control" value="@Model.COURSEAMOUNT" id="camt" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-md-6">
-                                <label>Course Start Date</label>
-                            </div>
-                            <div class="col-md-6">
-                                <input type="text" class="form-control" value="@Model.COURSEFROMDATE" id="csd" />
+                                <input type="text" class="form-control space" value="@Model.COURSEFROMDATE" id="csd" />
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-md-6">
-                                <label>Course Number Of Days</label>
+                                <label>Course Number Of Days</label><span style="color:red">*</span>
                             </div>
                             <div class="col-md-6">
-                                <input type="text" class="form-control" value="@Model.COURSEPERID" id="cnod" onkeyup="dd()" />
+                                <input type="number" class="form-control space" value="@Model.COURSEPERID" id="cnod" onkeyup="dd()" />
                             </div>
                         </div>
                         <div class="form-group">
@@ -75,20 +124,20 @@
                                 <label>Course End Date</label>
                             </div>
                             <div class="col-md-6">
-                                <input type="text" class="form-control" value="@Model.COURSETODATE" id="ced" readonly />
+                                <input type="text" class="form-control space" value="@Model.COURSETODATE" id="ced" readonly />
                             </div>
                         </div>
 
 
                         <div class="form-group">
                             <div class="col-md-6">
-                                <label>Course Trainer Name</label>
+                                <label>Course Trainer Name</label><span style="color:red">*</span>
                             </div>
                             <div class="col-md-6">
-                                <input type="text" class="form-control" value="@Model.TRAINERNAME" id="ctr" />
+                                <input type="text" class="form-control space" value="@Model.TRAINERNAME" id="ctr" />
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" hidden>
                             <div class="col-md-6">
                                 <label>Status</label>
                             </div>
@@ -100,24 +149,33 @@
                             </div>
                         </div>
 
-                        <br />
-                        <div class="row">
-                            <div class="col-md-9">
+                        <div class="form-group">
+                            <div class="col-md-6">
+                                <input type="button" value="Upadate" class="btn btn-primary" onclick="update()" />
 
-                                <div><input type="button" value="submit" onclick="update()" /></div>
+                                <input type="button" value="Cancel" class="btn btn-danger" onclick="window.location.href='@Url.Content("~/onlineExamUI/CourseRegistration")'" />
+                            </div>
+                            <div class="col-md-6">
+                                
 
                             </div>
-
                         </div>
+                        <br />
+
+
+                        @*<div><input type="button" value="submit" onclick="update()" /></div>*@
+
+
 
 
                     </div>
-                   
-                </div>
-                    <!-- /.card-body -->
 
                 </div>
-        </div>
+                <!-- /.card-body -->
+               
+
+            </div>
+       </div>
     </div>
 </section>
 
@@ -125,6 +183,25 @@
     $(function () {
         //$("#example1").DataTable();
         //$("#click").click();
+        $('.space').on('keydown', function (e) {
+            if (e.which === 32 && e.target.selectionStart === 0) {
+                return false;
+            }
+        });
+        $(".space").on("keyup", function () {
+            if ($(this).val() != "") {
+                $(this).next("span").remove();
+
+                $(this).css('border', '');
+            }
+            else {
+
+                $(this).next("span").remove();
+
+                $(this).css('border', '1px solid red');
+
+            }
+        });
         $("#csd").datepicker({
             minDate: 0,
             onSelect: function (dateStr) {
@@ -138,42 +215,158 @@
     });
 </script>
 <script>
-    
-        function dd() {
-            $('#ced').val("");
+
+    //    function dd() {
+    //        $('#ced').val("");
+    //    //var dd1 = "";
+    //    debugger
+    //        var date = new Date($("#csd").val()),
+    //            days = parseInt($("#cnod").val(), 10);
+    //    date.setDate(date.getDate() + days);
+
+    //    debugger
+    //    var date1 = new Date(date),
+
+    //        mnth = ("0" + (date1.getMonth() + 1)).slice(-2),
+    //        day = ("0" + date1.getDate()).slice(-2);
+    //    year = date1.getFullYear();
+    //    var ddd = [date.getFullYear(), mnth, day].join("-");
+    //    var dd1 = [day, mnth, date.getFullYear(),].join("-");
+    //    //dd1 = day + "-" + mnth + "-" + year;
+
+    //    var dd2 = dd1 != "aN-aN-NaN" ? dd1 : "";
+
+
+    //        $('#ced').val(dd2);
+
+    //};
+    function dd() {
+        $('#ced').val("");
         //var dd1 = "";
         debugger
-            var date = new Date($("#csd").val()),
-                days = parseInt($("#cnod").val(), 10);
-        date.setDate(date.getDate() + days);
+        days = parseInt($("#cnod").val(), 10);
+        var from = $("#csd").val().split("-")
+        var f = new Date(from[2], from[1] - 1, from[0])
+        f.setDate(f.getDate() + days);
+        //var m = (f.getDate()<10?'0':")+
+        //var date = new Date($("#startdate").val()),
+
+        // date.setDate(date.getDate() + days);
 
         debugger
-        var date1 = new Date(date),
+        var date1 = new Date(f),
 
             mnth = ("0" + (date1.getMonth() + 1)).slice(-2),
             day = ("0" + date1.getDate()).slice(-2);
         year = date1.getFullYear();
-        var ddd = [date.getFullYear(), mnth, day].join("-");
-        var dd1 = [day, mnth, date.getFullYear(),].join("-");
+        // var ddd = [date.getFullYear(), mnth, day].join("-");
+        var dd1 = [day, mnth, date1.getFullYear(),].join("-");
         //dd1 = day + "-" + mnth + "-" + year;
 
         var dd2 = dd1 != "aN-aN-NaN" ? dd1 : "";
 
 
-            $('#ced').val(dd2);
+        $('#ced').val(dd2);
 
     };
 </script>
 <script>
-    function update() {
-        $.post("@Url.Content("~/onlineExamUI/Updatecoursereg")", { COURSENAME: $("#cid").val(), COURSEPERID: $("#cnod").val(), COURSEFROMDATE: $("#csd").val(), COURSETODATE: $("#ced").val(), COURSEAMOUNT: $("#camt").val(), Description: $("#cdes").val(), TRAINERNAME: $("#ctr").val(), STATUS: $("#status").val() }, function (data)
-        {
-           
-            alert("Course Updated Successfully ...!");
-            
-        });
+   function update() {
 
+
+     if ($("#cid").val() != "" && $("#cnod").val() != "" && $("#csd").val() != "" && $("#ced").val() != "" && $("#camt").val() && $("#cdes").val() != "" && $("#ctr").val() != "" && $("#status").val() != "" && $("#Importance").val() != "") {
+
+        $.post("@Url.Content("~/onlineExamUI/Updatecoursereg")", { COURSENAME: $("#cid").val(), COURSEPERID: $("#cnod").val(), COURSEFROMDATE: $("#csd").val(), COURSETODATE: $("#ced").val(), COURSEAMOUNT: $("#camt").val(), Description: $("#cdes").val(), TRAINERNAME: $("#ctr").val(), STATUS: $("#status").val(), COURSEIMPORTANCE: $("#Importance").val() }, function (data)
+        {
+            if (data == "true") {
+                    $("#popup").click();
+                    $("#popuph1").text("Success");
+                    $("#popuph1").css("color", "green");
+                $("#popupp").text("Course Registration Updated Successfully...!");
+                $("#btnok").css("display", "block");
+                $("#btnok1").css("display", "none");
+                    //window.location.href = '@Url.Content("~/onlineExamUI/CourseRegistration")'
+                }
+                else {
+                    $("#popup").click();
+                    $("#popuph1").text("Failed");
+                    $("#popuph1").css("color", "red");
+                    $("#popupp").text("Something Went Wrong....");
+                    $("#btnok").css("display", "none");
+                    $("#btnok1").css("display", "block");
+                    //alert("something went wrong....!");
+                }
+
+        });
+            }
+     else {
+         $('#dic input[type=text]').each(function () {
+             if ($(this).val() == "") {
+                 $(this).next("span").remove();
+
+                 $(this).css('border', '1px solid red');
+             }
+         });
+         $('#dic input[type=number]').each(function () {
+             if ($(this).val() == "") {
+                 $(this).next("span").remove();
+
+                 $(this).css('border', '1px solid red');
+             }
+         });
+         $('#dic textarea').each(function () {
+             if ($(this).val() == "") {
+                 $(this).next("span").remove();
+
+                 $(this).css('border', '1px solid red');
+             }
+         });
+
+
+
+         $("#popup").click();
+         $("#popuph1").text("Warining..?");
+         $("#popuph1").css("color", "Yellow");
+         $("#popupp").text("Please Enter All Mandatory fields");
+         $("#btnok").css("display", "none");
+         $("#btnok1").css("display", "block");
+     }
+
+   }
+</script>
+
+<script>
+    function Reload() {
+    window.location.href = '@Url.Content("~/onlineExamUI/CourseRegistration")';
     }
 </script>
 
 
+<div class="container">
+    <div class="row">
+        <a class="btn btn-primary" id="popup" data-toggle="modal" style="display:none" href="#ignismyModal">open Popup</a>
+        <div class="modal fade" id="ignismyModal" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        @*<button type="button" class="close" data-dismiss="modal" id="btndismis" aria-label=""><span>×</span></button>*@
+                    </div>
+
+                    <div class="modal-body">
+
+                        <div class="thank-you-pop">
+                            @*<img src="http://goactionstations.co.uk/wp-content/uploads/2017/03/Green-Round-Tick.png" alt="">*@
+                            <h1 id="popuph1"> Success</h1>
+                            <p id="popupp"> </p>
+                            <!--<h3 class="cupon-pop">-->@*Your Id: <span>12345</span>*@<!--</h3>-->
+                            <button id="btnok" class="close" onclick="Reload()">OK</button>
+                            <button id="btnok1" style="display:none" class="close" data-dismiss="modal">OK</button>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

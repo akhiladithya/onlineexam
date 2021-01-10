@@ -44,7 +44,7 @@ namespace onlineexams.Controllers
         {
             Userregistration ddd = new Userregistration();
 
-                            
+
             ddd.FIRSTNAME = Session["userid"].ToString();
             //ddd.FIRSTNAME = "1034";
 
@@ -58,32 +58,40 @@ namespace onlineexams.Controllers
         {
             string dd = ff.Forgetpassword_(pwd);
             return Json(dd, JsonRequestBehavior.AllowGet);
-            
+
         }
         [HttpGet]
         public ActionResult CourseRegistration()
         {
             Courselist colst = new Courselist();
 
-           List<Coursereg> crlst= ff.CourseRegistration_data_();
+            List<Coursereg> crlst = ff.CourseRegistration_data_();
             colst.lst = crlst;
             colst.count = crlst.Count;
             return View(colst);
 
         }
         [HttpPost]
-        public Outputclass coursepost(Coursereg cur)
+        public string coursepost(Coursereg cur)
         {
             Outputclass op = new Outputclass();
-            op= ff.Create_Course_(cur);
-            return op;
+            op = ff.Create_Course_(cur);
+            if (op.Count > 0)
+            {
+                return "1";
+            }
+            else
+            {
+                return "0";
+            }
+
 
         }
         public JsonResult setcoursid(string cid)
         {
 
             Session["CID"] = cid;
-            
+
             return Json(true, JsonRequestBehavior.AllowGet);
         }
         public ActionResult UpadateCourse()
@@ -95,12 +103,29 @@ namespace onlineexams.Controllers
             return View(dd);
         }
 
-        [HttpPost]
-        public ActionResult Updatecoursereg(Coursereg reg)
+        public JsonResult Course_Isexistornot(string cname)
         {
-            Outputclass op = ff.Update_Course_(reg);   
+           bool op= ff.Course_Isexistornot(cname);
+            return Json(op, JsonRequestBehavior.AllowGet);
+        }
 
-            return View();
+
+        [HttpPost]
+        public JsonResult Updatecoursereg(Coursereg reg)
+        {
+            string stat = "";
+            Outputclass op = ff.Update_Course_(reg); 
+            if(op.Count > 0)
+            {
+                stat = "true";
+
+            }
+            else
+            {
+                stat = "false";
+            }
+
+            return Json(stat,JsonRequestBehavior.AllowGet);
         }
         
         public ActionResult GetusersList()
@@ -130,6 +155,10 @@ namespace onlineexams.Controllers
             // ip="10.10.10.65";
             // return ip;
             return ViewData["data11"].ToString();
+        }
+        public ActionResult popup()
+        {
+            return View();
         }
     }
 }

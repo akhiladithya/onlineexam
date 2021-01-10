@@ -313,6 +313,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="overlay2.css" />
+    <Content Include="overlaypopup.css" />
     <Content Include="pages\calendar.html" />
     <Content Include="pages\charts\chartjs.html" />
     <Content Include="pages\charts\flot.html" />
@@ -2353,6 +2355,7 @@
     <Content Include="Views\onlineExamUI\CourseRegistration.cshtml" />
     <Content Include="Views\onlineExamUI\UpadateCourse.cshtml" />
     <Content Include="Views\onlineExamUI\GetusersList.cshtml" />
+    <Content Include="Views\onlineExamUI\popup.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

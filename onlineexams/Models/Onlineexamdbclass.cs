@@ -83,6 +83,7 @@ namespace onlineexams.Models
                 cmd.Parameters.AddWithValue("@DESCRIPTION", coureg.Description);
                 cmd.Parameters.AddWithValue("@COURSEAMOUNT", coureg.COURSEAMOUNT);
                 cmd.Parameters.AddWithValue("@TRAINER", coureg.TRAINERNAME);
+                cmd.Parameters.AddWithValue("@COURSEIMPORTANCE", coureg.COURSEIMPORTANCE);
                 Connection();
                 int i = cmd.ExecuteNonQuery();
                 if (i > 0)
@@ -290,6 +291,34 @@ namespace onlineexams.Models
         }
         #endregion
 
+        #region Course Name Exists or Not
+        public bool Course_Isexistornot(string cname)
+        {
+            try
+            {
+                SqlCommand cmd = new SqlCommand("courseexists",conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@course",cname);
+                Connection();
+                var hh = cmd.ExecuteScalar();
+                if (hh.ToString() == "false")
+                    return false; //if  CourseName Exist return true
+                else
+                    return true;//if  CourseName not-Exist return false
+            }
+            catch (Exception ch)
+            {
+
+                return true;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+        #endregion
+
+
         #region Course Registration data
         public List<Coursereg> CourseRegistration_data()
         {
@@ -316,6 +345,7 @@ namespace onlineexams.Models
                     coureglist1.Description = dr["COURSEDESCRIPTION"] != null ? dr["COURSEDESCRIPTION"].ToString() : "";
                     coureglist1.TRAINERNAME = dr["COURSETRAINER"] != null ? dr["COURSETRAINER"].ToString() : "";
                     coureglist1.COURSEAMOUNT = dr["COURSEAMOUNT"] != null ? dr["COURSEAMOUNT"].ToString() : "";
+                    coureglist1.COURSEIMPORTANCE = dr["courseimportance"] != null ? dr["courseimportance"].ToString() : "";
                     coureglist.Add(coureglist1);
                 }
                 return coureglist;
@@ -527,6 +557,7 @@ namespace onlineexams.Models
                 cmd.Parameters.AddWithValue("@CAMT", coureg.COURSEAMOUNT);
                 cmd.Parameters.AddWithValue("@CTRAINERNAME", coureg.TRAINERNAME);
                 cmd.Parameters.AddWithValue("@STATUS", coureg.STATUS);
+                cmd.Parameters.AddWithValue("@CIMPORTANCE", coureg.COURSEIMPORTANCE);
                 Connection();
                 int i = cmd.ExecuteNonQuery();
                 if (i > 0)
