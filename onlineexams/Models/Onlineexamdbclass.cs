@@ -114,9 +114,10 @@ namespace onlineexams.Models
                 SqlCommand cmd = new SqlCommand("Insert_QUESTIONERIES", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@COURSEID", qns.COURSEID);
-                cmd.Parameters.AddWithValue("@QUESTIONID", qns.QUESTIONID);
+                //cmd.Parameters.AddWithValue("@QUESTIONID", qns.QUESTIONID);
                 cmd.Parameters.AddWithValue("@QUESTION", qns.QUESTION);
                 cmd.Parameters.AddWithValue("@TYPE", qns.TYPE);
+                cmd.Parameters.AddWithValue("@Marks", qns.MMarks);
                 cmd.Parameters.AddWithValue("@A", qns.OP1);
                 cmd.Parameters.AddWithValue("@B", qns.OP2);
                 cmd.Parameters.AddWithValue("@C", qns.OP3);
@@ -578,7 +579,101 @@ namespace onlineexams.Models
             }
         }
         #endregion
+        #region Number of QUESTIONS PAGE
+        public string Get_Noofqns(string Courseid)
+        {
+            string qns = "";
+            try
+            {
+                SqlCommand cmd = new SqlCommand("GET_NOOFQNS", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@CID", Courseid);
+                DataTable dt = new DataTable();
+                Connection();
+                SqlDataReader dr = cmd.ExecuteReader();
+                while (dr.Read())
+                {
+                    qns = dr["NUMBEROSQUETIONS"] != null ? dr["NUMBEROSQUETIONS"].ToString() : "";
 
+                }
+                dr.Close();
+                return qns;
+            }
+            catch (Exception ch)
+            {
+                qns = ch.Message;
+                return qns;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+
+        public List<Coursereg> Show_Course_data(string Courseid)
+        {
+            List<Coursereg> coreg = new List<Coursereg>();
+
+            try
+            {
+                SqlCommand cmd = new SqlCommand("SHOW_COURSE", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                DataTable dt = new DataTable();
+                Connection();
+                SqlDataReader dr = cmd.ExecuteReader();
+                Coursereg coreg1;
+                while (dr.Read())
+                {
+                    coreg1 = new Coursereg();
+                    coreg1.Courseid = dr["COURSEID"] != null ? Convert.ToInt32(dr["COURSEID"]) : 0; ;
+                    coreg1.COURSENAME = dr["COURSENAME"] != null ? dr["COURSENAME"].ToString() : "";
+                    coreg.Add(coreg1);
+                }
+                dr.Close();
+                return coreg;
+            }
+            catch (Exception ch)
+            {
+                
+                return coreg;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        public Outputclass Update_qns(Coursereg coureg)
+        {
+            Outputclass outputclass = new Outputclass();
+            try
+            {
+                SqlCommand cmd = new SqlCommand("UPDATE_QNS", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@CID", coureg.Courseid);
+                cmd.Parameters.AddWithValue("@NUMBEROSQUETIONS", coureg.NUMBEROSQUETIONS);
+                Connection();
+                int i = cmd.ExecuteNonQuery();
+                if (i > 0)
+                {
+                    outputclass.Count = i;
+                }
+                return outputclass;
+            }
+            catch (Exception ex)
+            {
+
+                outputclass.Msg = ex.ToString();
+                return outputclass;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        #endregion
 
     }
 }
