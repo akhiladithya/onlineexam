@@ -2356,6 +2356,7 @@
     <Content Include="Views\onlineExamUI\UpadateCourse.cshtml" />
     <Content Include="Views\onlineExamUI\GetusersList.cshtml" />
     <Content Include="Views\onlineExamUI\popup.cshtml" />
+    <Content Include="Views\onlineExamUI\NOFQNSENTRY.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

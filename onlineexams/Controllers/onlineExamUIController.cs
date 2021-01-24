@@ -135,9 +135,31 @@ namespace onlineexams.Controllers
             lst1.count = lst1.lst.Count;
             return View(lst1);
         }
-
-        public string getip()//No use
+        public ActionResult NOFQNSENTRY()
         {
+            List<Coursereg> dd = ff.Show_Course_data();
+            ViewBag.getcourses = new SelectList(dd, "Courseid", "COURSENAME");
+
+
+            return View();
+        }
+        public JsonResult insertques(Coursereg coureg)
+        {
+            //Outputclass Update_qns(Coursereg coureg)
+            // {
+            //     return dbcls.Update_qns(coureg);
+            // }
+            Outputclass update = ff.Update_qns(coureg);
+            return Json(update.Count, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult getquestins(string Courseid)
+        {
+            string dd = ff.Get_Noofqns(Courseid);
+            return Json(dd, JsonRequestBehavior.AllowGet);
+        }
+            public string getip()//No use
+            {
             string ip = "";
             System.Web.HttpContext context = System.Web.HttpContext.Current;
             string IPAddress = context.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];

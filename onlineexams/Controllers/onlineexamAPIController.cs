@@ -119,6 +119,21 @@ namespace onlineexams.Controllers
             return dbcls.Update_Course(coureg);
         }
         #endregion
+        #region Question Entery
+        public List<Coursereg> Show_Course_data()
+        {
+            return dbcls.Show_Course_data();
+        }
+        public string Get_Noofqns(string Courseid)
+        {
+            return dbcls.Get_Noofqns(Courseid);
+        }
+        public Outputclass Update_qns(Coursereg coureg)
+        {
+            return dbcls.Update_qns(coureg);
+        }
+
+         #endregion
 
 
 
