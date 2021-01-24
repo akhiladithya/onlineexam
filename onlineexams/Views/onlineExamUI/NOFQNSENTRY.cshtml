@@ -1,4 +1,5 @@
-﻿
+﻿@model List<onlineexams.Models.Coursereg> 
+
 @{
     ViewBag.Title = "NOFQNSENTRY";
     Layout = "~/Views/Shared/_LayoutPage1.cshtml";
@@ -44,11 +45,11 @@
     <div class="container-fluid">
         <div class="card card-default">
             <div class="card-header">
-                <h3 class="card-title">Select2 (Default Theme)</h3>
+                <h3 class="card-title">Course Number Of Questions Entry</h3>
 
                 <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
-                    <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-remove"></i></button>
+                    @*<button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-remove"></i></button>*@
                 </div>
             </div>
             <!-- /.card-header -->
@@ -173,7 +174,7 @@
     function enterQuest() {
         if ($("#course").val() != "" && $("#txtQ").val() > 0) {
 
-           
+
 
                 //alert();
                 $.post("@Url.Content("insertques")", { Courseid: $("#course").val(), NUMBEROSQUETIONS: $("#txtQ").val() }, function (data) {
@@ -196,7 +197,7 @@
                     }
 
                 })
-           
+
         }
         else {
             debugger
@@ -239,3 +240,48 @@
         window.location.href = ("NOFQNSENTRY");
     }
 </script>
+
+
+<div class="card">
+    <div class="card-header" style="background-color:aliceblue">
+        <h3 class="card-title">Course Number Of Questions Entry Details</h3>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <table id="example1" class="table table-bordered table-striped table-responsive table-primary">
+            <thead>
+                <tr>
+                    <th>Course Name</th>
+                    <th>Number Of Quetions</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                <tr class="tbhhover" @*onclick="setareamasterid(@item.ID)"*@>
+
+                    <td>@item.COURSENAME</td>
+
+                  
+                    <td>@item.NUMBEROSQUETIONS</td>
+                    
+
+
+
+                </tr>
+                }
+
+
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th>Course Name</th>
+                    <th>Number Of Quetions</th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    <!-- /.card-body -->
+</div>
+

@@ -9,7 +9,8 @@ namespace onlineexams.Models
 {
     public class Onlineexamdbclass
     {
-        SqlConnection conn = new SqlConnection("Data Source=.;database=ONLINETRAINEE; uid=sa;Password=P@ssw0rd;Integrated Security = True;");
+        //SqlConnection conn = new SqlConnection("Data Source=.;database=ONLINETRAINEE; uid=sa;Password=P@ssw0rd;Integrated Security = True;");
+        SqlConnection conn = new SqlConnection("Data Source=.;database=ONLINETRAINEE; Integrated Security = True;");
        
         #region Connectionstring
         public void Connection()
@@ -579,6 +580,8 @@ namespace onlineexams.Models
             }
         }
         #endregion
+
+
         #region Number of QUESTIONS PAGE
         public string Get_Noofqns(string Courseid)
         {
@@ -672,6 +675,41 @@ namespace onlineexams.Models
                 conn.Close();
             }
         }
+
+        public List<Coursereg> Get_Course_QNData()
+        {
+            List<Coursereg> coursereg = new List<Coursereg>();
+            try
+            {
+                SqlCommand cmd = new SqlCommand("GET_COURSE_QNNUMBERS", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                Connection();
+                SqlDataReader dr = cmd.ExecuteReader();
+                Coursereg coursereg1;
+                while (dr.Read())
+                {
+                    coursereg1 = new Coursereg();
+                    coursereg1.COURSENAME = dr["COURSENAME"] != null ? dr["COURSENAME"].ToString() : "";
+                    coursereg1.NUMBEROSQUETIONS = dr["NUMBEROSQUETIONS"] != null ? dr["NUMBEROSQUETIONS"].ToString() : "";
+                    if(coursereg1.NUMBEROSQUETIONS==""||coursereg1.NUMBEROSQUETIONS==null)
+                    {
+                        coursereg1.NUMBEROSQUETIONS = "0";
+                    }
+                    coursereg.Add(coursereg1);
+                }
+                return coursereg;
+                dr.Close();
+            }
+            catch (Exception ch)
+            {
+                return coursereg;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
 
         #endregion
 

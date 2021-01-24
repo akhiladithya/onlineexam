@@ -139,10 +139,31 @@ namespace onlineexams.Controllers
         {
             List<Coursereg> dd = ff.Show_Course_data();
             ViewBag.getcourses = new SelectList(dd, "Courseid", "COURSENAME");
+            List<Coursereg> dd1 = ff.Get_Course_QNData();
+            //Courselist colst = new Courselist();
 
+            //List<Coursereg> crlst = ff.Get_Course_QNData();
+            //colst.lst = crlst;
+            //colst.count = crlst.Count;
 
-            return View();
+            return View(dd1);
         }
+
+        public JsonResult Get_Course_QNData()
+        {
+            //List<Coursereg> dd = ff.Get_Course_QNData();
+            //ViewBag.getcourses = new SelectList(dd, "Courseid", "COURSENAME");
+            //return View();
+
+
+            Courselist colst = new Courselist();
+
+            List<Coursereg> crlst = ff.Get_Course_QNData();
+            colst.lst = crlst;
+            colst.count = crlst.Count;
+            return Json(colst,JsonRequestBehavior.AllowGet);
+        }
+
         public JsonResult insertques(Coursereg coureg)
         {
             //Outputclass Update_qns(Coursereg coureg)

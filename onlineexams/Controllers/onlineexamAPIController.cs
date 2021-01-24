@@ -132,8 +132,13 @@ namespace onlineexams.Controllers
         {
             return dbcls.Update_qns(coureg);
         }
+        [HttpGet]
+        public List<Coursereg> Get_Course_QNData()
+        {
+            return dbcls.Get_Course_QNData();
+        }
 
-         #endregion
+        #endregion
 
 
 
