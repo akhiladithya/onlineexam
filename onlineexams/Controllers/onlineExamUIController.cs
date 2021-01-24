@@ -179,14 +179,9 @@ namespace onlineexams.Controllers
             string dd = ff.Get_Noofqns(Courseid);
             return Json(dd, JsonRequestBehavior.AllowGet);
         }
-        #region Course Questions Entry
-        public ActionResult QUestionEntry()
-        {
-            return View();
-        }
-        #endregion
+        
         public string getip()//No use
-            {
+        {
             string ip = "";
             System.Web.HttpContext context = System.Web.HttpContext.Current;
             string IPAddress = context.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
@@ -209,5 +204,38 @@ namespace onlineexams.Controllers
         {
             return View();
         }
+
+        #region Course Questions Entry
+        public ActionResult QUestionEntry()
+        {
+            List<Coursereg> dd = ff.Show_Course_data();
+            ViewBag.getcourses = new SelectList(dd, "Courseid", "COURSENAME");
+            List<Coursereg> dd1 = ff.SHOW_COURSE_NOTNULL();
+            return View(dd1);
+        }
+
+        public JsonResult GET_QNS_COUNT(string Courseid)
+        {
+            List<Questioneries> Qncount = ff.GET_QNS_COUNT(Courseid);
+            return Json(Qncount, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GET_QNS_STATUS(string Courseid)
+        {
+            List<Questioneries> Qnstatus = ff.GET_QNS_STATUS(Courseid);
+            return Json(Qnstatus, JsonRequestBehavior.AllowGet);
+        }
+        //Create_QUESTIONs_
+        [HttpPost]
+        public ActionResult Create_QUESTIONs(Questioneries qns)
+        {
+            Outputclass op = ff.Create_QUESTIONs(qns);
+
+            return Json(op, JsonRequestBehavior.AllowGet);
+        }
+
+
+        #endregion
+
     }
 }

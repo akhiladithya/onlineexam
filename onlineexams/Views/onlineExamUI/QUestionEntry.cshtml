@@ -49,7 +49,7 @@
 
                 <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
-                    <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-remove"></i></button>
+                    @*<button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-remove"></i></button>*@
                 </div>
             </div>
             <!-- /.card-header -->
@@ -61,29 +61,48 @@
                             <select class="form-control space1" onchange="getquestions()" id="course" style="width: 100%;">
                                 <option value="">--Select Course---</option>
                                 @foreach (var item in courses)
-                                {
+                                 {
                                     <option value="@item.Value">@item.Text</option>
 
-                                }
+                                 }
                             </select>
                         </div>
-                        <!-- /.form-group -->
-                        <div class="form-group" id="txtqq" style="display:none">
-                            <label>Enter Number Of Questions</label><span style="color:red">*</span>
-                            <input type="number" id="txtQ" class="form-control space" />
-                        </div>
-                        <!-- /.form-group -->
+                    
                     </div>
-                    <!-- /.col -->
-                    <!-- /.col -->
+                  
                 </div>
-                <!-- /.row -->
-                <!-- /.row -->
+               
             </div>
-            <!-- /.card-body -->
-            <div class="card-footer">
-                <input type="button" class="form-control btn-primary" onclick="enterQuest()" value="Submit" />
+           
+            
+        </div>
+    </div>
+</section>
+<section class="content" id="content1" style="display:none">
+    <div class="container-fluid">
+        <div class="card card-default">
+            <div class="card-header">
+                <h3 class="card-title"></h3>
+
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+                    @*<button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-remove"></i></button>*@
+                </div>
             </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12" id="dic1">
+
+                        
+
+                        </div>
+
+                </div>
+
+            </div>
+
+
         </div>
     </div>
 </section>
@@ -154,87 +173,129 @@
     function getquestions() {
         if ($("#course").val() != "") {
             debugger
-            $.get("@Url.Content("getquestins?Courseid=")" + $("#course").val(), function (data) {
-              //  alert(data);
-                if (data == "") {
-                    $("#txtQ").val(0);
-                    $("#txtqq").css("display", "block");
+            $.get("@Url.Content("GET_QNS_STATUS?Courseid=")" + $("#course").val(), function (datya1) {
+               // alert(datya1[0].Qnstatus);
+                if (datya1[0].Qnstatus == "TRUE") {
+                    $.get("@Url.Content("GET_QNS_COUNT?Courseid=")" + $("#course").val(), function (data) {
+                        debugger
+                        $(".ddd").remove();
+                        var question = parseInt(data[0].Qnscount)+1;
+                        $("h3").text("Question.No : "+ question);
+                       $("#content1").css("display", "block");
+                        $("#dic1").append('<div class="form-group ddd"><div class= "col-md-12" > <label for="inputDescription">Question</label><span style="color:red">*</span></div > <div class="col-md-12"><textarea id="inputDescription" class="form-control space" rows="4"></textarea></div></div >');
+                        $("#dic1").append('<div class="form-group"><div class="col-md-12"><table> <tr><td><input type="radio" id="r1" value="o1" name="check" style="width: 49px; height: 15px;" /> </td><td><input type="text"  class="form-control" id="o1" style="width: 650px;" /></td></tr> <tr><td> <input type="radio" value="o2" id="r2" name="check" style="width: 49px; height: 15px;" /></td> <td><input type="text" class="form-control" id="o2" style="width: 650px;" /></td></tr><tr><td><input type="radio" value="o3" id="r3" name="check" style="width: 49px; height: 15px;" /></td><td><input type="text" class="form-control" id="o3" style="width: 650px;" /></td></tr> <tr><td><input type="radio" value="o4" id="r4" name="check" style="width: 49px; height: 15px;" /></td><td><input type="text" class="form-control" id="o4" style="width: 650px;" /></td></tr></table></div></div>');
+                        $("#dic1").append('<div class="form-group ddd"><div class= "col-md-12" > <label for="marks">Marks</label><span style="color:red">*</span></div > <div class="col-md-6"><input type="number" id="marks" class="form-control space"/></div></div >');
+                    });
                 }
-                else {
-                    $("#txtQ").val(data);
-                    $("#txtqq").css("display", "block");
-                }
-            })
-
+            });
 
 
         }
     }
 
-    function enterQuest() {
-        if ($("#course").val() != "" && $("#txtQ").val() > 0) {
+    
 
+</script>
 
+<script>
+    function coursepost() {
+        if ($("#inputDescription").val() != "" && $("#o1").val() != "" && $("#o2").val() != "" && $("#o3").val() != "" && $("#o4").val() != "" && $("#marks").val() != "" && $('input[name="check"]:checked').val() != "") {
+            $.post("@Url.Content("~/onlineExamUI/Create_QUESTIONs")", { QUESTION: $("#inputDescription").val(), OP1: $("#o1").val(), OP2: $("#o2").val(), OP3: $("#o3").val(), OP4: $("#o4").val(), ANSWER: $("#").val(), MMarks: $("#marks").val()}, function (data) {
+                debugger
+                if (data == "1") {
+                    $("#popup").click();
+                    $("#popuph1").text("Success");
+                    $("#popuph1").css("color", "green");
+                    $("#popupp").text("Question Added Successfully...!");
+                    $("#btnok").show();
+                    $("#btnclose").css("Display", "none");
 
-                //alert();
-                $.post("@Url.Content("insertques")", { Courseid: $("#course").val(), NUMBEROSQUETIONS: $("#txtQ").val() }, function (data) {
-                    if (data == "1") {
-                        $("#popup").click();
-                        $("#popuph1").text("Success");
-                        $("#popuph1").css("color", "green");
-                        $("#popupp").text("Course Registration Completed Successfully...!");
-                        $("#btnok").show();
-                        $("#btnclose").css("Display", "none");
-
-                    }
-                    else {
-                        $("#popup").click();
-                        $("#popuph1").text("Failed");
-                        $("#popuph1").css("color", "red");
-                        $("#popupp").text("Something Went Wrong....");
-                        $("#btnok").css("Display", "none");
-                        $("#btnclose").show();
-                    }
-
-                })
-
+                }
+                else {
+                    $("#popup").click();
+                    $("#popuph1").text("Failed");
+                    $("#popuph1").css("color", "red");
+                    $("#popupp").text("Something Went Wrong....");
+                   $("#btnok").css("Display", "none");
+                    $("#btnclose").show();
+                }
+            })
         }
         else {
             debugger
-            $('#dic input[type=text]').each(function () {
+            $('#dic1 input[type=text]').each(function () {
                 if ($(this).val() == "") {
                     $(this).next("span").remove();
 
                     $(this).css('border', '1px solid red');
                 }
             });
-            $('#dic input[type=number]').each(function () {
+            $('#dic1 input[type=number]').each(function () {
                 if ($(this).val() == "") {
-                   // $(this).next("span").remove();
+                    $(this).next("span").remove();
 
                     $(this).css('border', '1px solid red');
                 }
             });
-            $('#dic select').each(function () {
-                debugger
+            $('#dic1 textarea').each(function () {
                 if ($(this).val() == "") {
-                    //$(this).next("span").remove();
+                    $(this).next("span").remove();
 
                     $(this).css('border', '1px solid red');
                 }
             });
+
+            //if ($("#inputName").val() == "") {
+            //    $("#inputName").next("span").remove();
+
+            //    $("#inputName").css('border', '1px solid red');
+            //}
+            //if ($("#inputDescription").val() == "") {
+            //    $("#inputDescription").next("span").remove();
+
+            //    $("#inputDescription").css('border', '1px solid red');
+            //}
+            //if ($("#ndays").val() == 0) {
+            //    $("#ndays").next("span").remove();
+
+            //    $("#ndays").css('border', '1px solid red');
+            //}
+            //if ($("#camt").val() == 0) {
+            //    $("#camt").next("span").remove();
+
+            //    $("#camt").css('border', '1px solid red');
+            //}
+            //if ($("#startdate").val() == "") {
+            //    $("#startdate").next("span").remove();
+
+            //    $("#startdate").css('border', '1px solid red');
+            //}
+            //if ($("#Trainer").val() == "") {
+            //    $("#Trainer").next("span").remove();
+
+            //    $("#Trainer").css('border', '1px solid red');
+            //}
+            //if ($("#Importance").val() == "") {
+            //    $("#Importance").next("span").remove();
+
+            //    $("#Importance").css('border', '1px solid red');
+            //}
 
             $("#popup").click();
             $("#popuph1").text("Warining..?");
             $("#popuph1").css("color", "Yellow");
             $("#popupp").text("Please Enter All Mandatory fields");
             $("#btnok").css("Display", "none");
-            //  $("#btnclose").css("Display", "block");
+          //  $("#btnclose").css("Display", "block");
             $("#btnclose").show();
         }
     }
 
+
+
 </script>
+
+
 <script>
     function Reload() {
         window.location.href = ("NOFQNSENTRY");

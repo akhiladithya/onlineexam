@@ -27,7 +27,7 @@ namespace onlineexams.Controllers
         #endregion
 
         #region Create Questions
-        public Outputclass Create_QUESTIONs_(Questioneries qns)
+        public Outputclass Create_QUESTIONs(Questioneries qns)
         {
             return dbcls.Create_QUESTIONs(qns);
         }
@@ -140,7 +140,26 @@ namespace onlineexams.Controllers
 
         #endregion
 
+        #region Course Questions Entry
+        [HttpGet]
+        public List<Coursereg> SHOW_COURSE_NOTNULL()
+        {
+            return dbcls.SHOW_COURSE_NOTNULL();
+        }
 
+        [HttpGet]
+        public List<Questioneries> GET_QNS_COUNT(string Courseid)
+        {
+            return dbcls.GET_QNS_COUNT(Courseid);
+        }
+
+        [HttpGet]
+        public List<Questioneries> GET_QNS_STATUS(string Courseid)
+        {
+            return dbcls.GET_QNS_STATUS(Courseid);
+        }
+
+        #endregion
 
 
     }

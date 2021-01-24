@@ -116,6 +116,8 @@ namespace onlineexams.Models
         public string OP3 { get; set; }
         public string OP4 { get; set; }
         public string ANSWER { get; set; }
+        public string Qnscount { get; set; }
+        public string Qnstatus { get; set; }
     }
 
     #endregion

@@ -713,5 +713,113 @@ namespace onlineexams.Models
 
         #endregion
 
+
+        #region Course Questions Entry
+        public List<Coursereg> SHOW_COURSE_NOTNULL()
+        {
+            List<Coursereg> coreg = new List<Coursereg>();
+
+            try
+            {
+                SqlCommand cmd = new SqlCommand("SHOW_COURSE_NOTNULL", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                DataTable dt = new DataTable();
+                Connection();
+                SqlDataReader dr = cmd.ExecuteReader();
+                Coursereg coreg1;
+                while (dr.Read())
+                {
+                    coreg1 = new Coursereg();
+                    coreg1.Courseid = dr["COURSEID"] != null ? Convert.ToInt32(dr["COURSEID"]) : 0; ;
+                    coreg1.COURSENAME = dr["COURSENAME"] != null ? dr["COURSENAME"].ToString() : "";
+                    coreg.Add(coreg1);
+                }
+                dr.Close();
+                return coreg;
+            }
+            catch (Exception ch)
+            {
+
+                return coreg;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+
+
+        public List<Questioneries> GET_QNS_COUNT(string courseid)
+        {
+            List<Questioneries> Qn = new List<Questioneries>();
+
+            try
+            {
+                SqlCommand cmd = new SqlCommand("GET_QNS_COUNT", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@CID", courseid);
+                //DataTable dt = new DataTable();
+                Connection();
+                SqlDataReader dr = cmd.ExecuteReader();
+                
+                Questioneries Qn1;
+                while (dr.Read())
+                {
+                    Qn1 = new Questioneries();
+                    Qn1.Qnscount = dr["QNS"] != null ? dr["QNS"].ToString() : "";
+                    Qn.Add(Qn1);
+                }
+                dr.Close();
+                return Qn;
+            }
+            catch (Exception ch)
+            {
+
+                return Qn;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+
+        public List<Questioneries> GET_QNS_STATUS(string courseid)
+        {
+            List<Questioneries> Qn = new List<Questioneries>();
+
+            try
+            {
+                SqlCommand cmd = new SqlCommand("GET_QNS_STATUS", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@CID", courseid);
+                DataTable dt = new DataTable();
+                Connection();
+                SqlDataReader dr = cmd.ExecuteReader();
+               
+                Questioneries Qn1;
+                while (dr.Read())
+                {
+                    Qn1 = new Questioneries();
+                    Qn1.Qnstatus = dr["STATUS"] != null ? dr["STATUS"].ToString() : "";
+                    Qn.Add(Qn1);
+                }
+                dr.Close();
+                return Qn;
+            }
+            catch (Exception ch)
+            {
+
+                return Qn;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        #endregion
+
     }
 }
