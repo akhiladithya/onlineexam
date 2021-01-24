@@ -611,7 +611,7 @@ namespace onlineexams.Models
         }
 
 
-        public List<Coursereg> Show_Course_data(string Courseid)
+        public List<Coursereg> Show_Course_data()
         {
             List<Coursereg> coreg = new List<Coursereg>();
 
@@ -652,7 +652,7 @@ namespace onlineexams.Models
                 SqlCommand cmd = new SqlCommand("UPDATE_QNS", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@CID", coureg.Courseid);
-                cmd.Parameters.AddWithValue("@NUMBEROSQUETIONS", coureg.NUMBEROSQUETIONS);
+                cmd.Parameters.AddWithValue("@NOOFQNS", coureg.NUMBEROSQUETIONS);
                 Connection();
                 int i = cmd.ExecuteNonQuery();
                 if (i > 0)
