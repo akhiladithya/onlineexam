@@ -158,7 +158,13 @@ namespace onlineexams.Controllers
             string dd = ff.Get_Noofqns(Courseid);
             return Json(dd, JsonRequestBehavior.AllowGet);
         }
-            public string getip()//No use
+        #region Course Questions Entry
+        public ActionResult QUestionEntry()
+        {
+            return View();
+        }
+        #endregion
+        public string getip()//No use
             {
             string ip = "";
             System.Web.HttpContext context = System.Web.HttpContext.Current;
