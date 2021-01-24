@@ -9,7 +9,8 @@ namespace onlineexams.Models
 {
     public class Onlineexamdbclass
     {
-        SqlConnection conn = new SqlConnection("Data Source=.;database=ONLINETRAINEE; uid=sa;Password=P@ssw0rd;Integrated Security = True;");
+        //SqlConnection conn = new SqlConnection("Data Source=.;database=ONLINETRAINEE; uid=sa;Password=P@ssw0rd;Integrated Security = True;");
+        SqlConnection conn = new SqlConnection("Data Source=.;database=ONLINETRAINEE; ssssssBIntegrated Security = True;");
        
         #region Connectionstring
         public void Connection()
