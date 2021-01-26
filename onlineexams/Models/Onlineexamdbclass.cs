@@ -364,41 +364,7 @@ namespace onlineexams.Models
         #endregion
 
         #region QUESTIONERIES data
-        public List<Questioneries> Questio_data()
-        {
-            List<Questioneries> qnslist = new List<Questioneries>();
-            try
-            {
-                SqlCommand cmd = new SqlCommand("GET_QUESTIONERIES", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                Connection();
-                SqlDataReader dr = cmd.ExecuteReader();
-                Questioneries qnslist1;
-                while (dr.Read())
-                {
-                    qnslist1 = new Questioneries();
-                    qnslist1.COURSEID = dr["COURSEID"] != null ? Convert.ToInt32(dr["COURSEID"]) : 0;
-                    qnslist1.QUESTIONID = dr["QUESTIONID"] != null ? Convert.ToInt32(dr["QUESTIONID"]) : 0;
-                    qnslist1.QUESTION = dr["QUESTION"] != null ? dr["QUESTION"].ToString() : "";
-                    qnslist1.TYPE = dr["TYPE"] != null ? dr["TYPE"].ToString() : "";
-                    qnslist1.OP1 = dr["A"] != null ? dr["A"].ToString() : "";
-                    qnslist1.OP2 = dr["B"] != null ? dr["B"].ToString() : "";
-                    qnslist1.OP3 = dr["B"] != null ? dr["B"].ToString() : "";
-                    qnslist1.OP4 = dr["D"] != null ? dr["D"].ToString() : "";
-                    qnslist1.ANSWER = dr["ANSWER"] != null ? dr["ANSWER"].ToString() : "";
-                    qnslist.Add(qnslist1);
-                }
-                return qnslist;
-            }
-            catch (Exception ch)
-            {
-                return qnslist;
-            }
-            finally
-            {
-                conn.Close();
-            }
-        }
+       
         #endregion
 
         #region Curse Assign data
@@ -640,6 +606,44 @@ namespace onlineexams.Models
             {
                 
                 return coreg;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        public List<Questioneries> Questio_data(string coid)
+        {
+            List<Questioneries> qnslist = new List<Questioneries>();
+            try
+            {
+                SqlCommand cmd = new SqlCommand("GET_QUESTIONERIES", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@Courseid",coid);
+                Connection();
+                SqlDataReader dr = cmd.ExecuteReader();
+                Questioneries qnslist1;
+                while (dr.Read())
+                {
+                    qnslist1 = new Questioneries();
+                    qnslist1.COURSEID = dr["COURSEID"] != null ? Convert.ToInt32(dr["COURSEID"]) : 0;
+                    qnslist1.QUESTIONID = dr["QUESTIONID"] != null ? Convert.ToInt32(dr["QUESTIONID"]) : 0;
+                    qnslist1.QUESTION = dr["QUESTION"] != null ? dr["QUESTION"].ToString() : "";
+                    //qnslist1.TYPE = dr["TYPE"] != null ? dr["TYPE"].ToString() : "";
+                    qnslist1.OP1 = dr["A"] != null ? dr["A"].ToString() : "";
+                    qnslist1.OP2 = dr["B"] != null ? dr["B"].ToString() : "";
+                    qnslist1.OP3 = dr["C"] != null ? dr["C"].ToString() : "";
+                    qnslist1.OP4 = dr["D"] != null ? dr["D"].ToString() : "";
+                    qnslist1.MMarks = dr["MARKS"] != null ? dr["MARKS"].ToString() : "";
+                    qnslist1.ANSWER = dr["ANSWER"] != null ? dr["ANSWER"].ToString() : "";
+                    qnslist.Add(qnslist1);
+                }
+                return qnslist;
+            }
+            catch (Exception ch)
+            {
+                return qnslist;
             }
             finally
             {

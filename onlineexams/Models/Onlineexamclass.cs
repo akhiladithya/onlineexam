@@ -120,6 +120,13 @@ namespace onlineexams.Models
         public string Qnstatus { get; set; }
     }
 
+
+    public class Quesionarieslist
+    {
+        public List<Questioneries> lstq { get; set; }
+        public int count { get; set; }
+    }
+
     #endregion
 
 }

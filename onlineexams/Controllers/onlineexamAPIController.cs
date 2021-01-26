@@ -73,11 +73,7 @@ namespace onlineexams.Controllers
 
 
         #region QUESTIONERIES data
-        [HttpGet]
-        public List<Questioneries> Questio_data_()
-        {
-            return dbcls.Questio_data();
-        }
+        
         #endregion
 
         #region User Assign data
@@ -157,6 +153,12 @@ namespace onlineexams.Controllers
         public List<Questioneries> GET_QNS_STATUS(string Courseid)
         {
             return dbcls.GET_QNS_STATUS(Courseid);
+        }
+
+        [HttpGet]
+        public List<Questioneries> Questio_data(string coid)
+        {
+            return dbcls.Questio_data(coid);
         }
 
         #endregion

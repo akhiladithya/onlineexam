@@ -1,4 +1,6 @@
 ﻿
+
+
 @{
     ViewBag.Title = "QUestionEntry";
     Layout = "~/Views/Shared/_LayoutPage1.cshtml";
@@ -8,8 +10,28 @@
 
 @*<h2>QuestionEntry</h2>*@
 
+
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+@*<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css">
+
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.js"></script>*@
+
+
+
+<!-- DataTables -->
+@*<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <link href="~/overlay2.css" rel="stylesheet" />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>*@
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<script src="~/Scripts/jquery-ui-1.12.1.js"></script>
+
 <link href="~/plugins/select2/css/select2.min.css" rel="stylesheet" />
 <link href="~/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css" rel="stylesheet" />
+
 <style>
     input::-webkit-outer-spin-button,
     input::-webkit-inner-spin-button {
@@ -38,6 +60,11 @@
         opacity: 3;
         left: 200px;
     }
+
+    .table thead,
+    .table th {
+        text-align: center;
+    }
 </style>
 
 
@@ -45,7 +72,7 @@
     <div class="container-fluid">
         <div class="card card-default">
             <div class="card-header">
-                <h3 class="card-title">Select2 (Default Theme)</h3>
+                <h2 class="card-title">Quesions Entry</h2>
 
                 <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
@@ -61,20 +88,20 @@
                             <select class="form-control space1" onchange="getquestions()" id="course" style="width: 100%;">
                                 <option value="">--Select Course---</option>
                                 @foreach (var item in courses)
-                                 {
+                                {
                                     <option value="@item.Value">@item.Text</option>
 
-                                 }
+                                }
                             </select>
                         </div>
-                    
+
                     </div>
-                  
+
                 </div>
-               
+
             </div>
-           
-            
+
+
         </div>
     </div>
 </section>
@@ -94,9 +121,12 @@
                 <div class="row">
                     <div class="col-md-12" id="dic1">
 
-                        
 
-                        </div>
+
+                    </div>
+                    <div>
+                        <input type="button" id="btnsubmit" onclick="Questionspost()" value="Submit" />
+                    </div>
 
                 </div>
 
@@ -106,6 +136,48 @@
         </div>
     </div>
 </section>
+
+
+<div class="card">
+    <div class="card-header" style="background-color:aliceblue">
+        <h4 class="card-title">Course Quesion Details</h4>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body" >
+        <table id="example1" class="table table-bordered table-striped table-primary" >
+            <thead>
+                <tr>
+                    <th>S.NO</th>
+                    <th>QUESTION</th>
+                    <th>Option 1</th>
+                    <th>Option 2</th>
+                    <th>Option 3</th>
+                    <th>Option 4</th>
+                    <th>MARKS</th>
+                    <th>Answer</th>
+                </tr>
+            </thead>
+            <tbody id="tblbdy">
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th>S.NO.</th>
+                    <th>QUESTION</th>
+                    <th>Option 1</th>
+                    <th>Option 2</th>
+                    <th>Option 3</th>
+                    <th>Option 4</th>
+                    <th>MARKS</th>
+                    <th>Answer</th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    <!-- /.card-body -->
+</div>
+
+
+
 
 <div class="container">
     <div class="row">
@@ -135,6 +207,9 @@
         </div>
     </div>
 </div>
+
+
+
 <script src="~/docs/assets/plugins/jquery/jquery.min.js"></script>
 <script src="~/plugins/select2/js/select2.full.min.js"></script>
 @*<script src="~/docs/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>*@
@@ -143,6 +218,7 @@
 <script>
     $(function () {
         //debugger
+        $("#example1").DataTable();
         $(".space1").select2()
 
         //Initialize Select2 Elements
@@ -165,50 +241,98 @@
                 $(this).next("span").remove();
 
                 $(this).css('border', '1px solid red');
-
             }
         });
     });
 
     function getquestions() {
         if ($("#course").val() != "") {
-            debugger
+
+            $("h3").text("Question.No : ");
+            $(".ddd").remove();
             $.get("@Url.Content("GET_QNS_STATUS?Courseid=")" + $("#course").val(), function (datya1) {
                // alert(datya1[0].Qnstatus);
                 if (datya1[0].Qnstatus == "TRUE") {
                     $.get("@Url.Content("GET_QNS_COUNT?Courseid=")" + $("#course").val(), function (data) {
-                        debugger
+
                         $(".ddd").remove();
                         var question = parseInt(data[0].Qnscount)+1;
                         $("h3").text("Question.No : "+ question);
                        $("#content1").css("display", "block");
                         $("#dic1").append('<div class="form-group ddd"><div class= "col-md-12" > <label for="inputDescription">Question</label><span style="color:red">*</span></div > <div class="col-md-12"><textarea id="inputDescription" class="form-control space" rows="4"></textarea></div></div >');
-                        $("#dic1").append('<div class="form-group"><div class="col-md-12"><table> <tr><td><input type="radio" id="r1" value="o1" name="check" style="width: 49px; height: 15px;" /> </td><td><input type="text"  class="form-control" id="o1" style="width: 650px;" /></td></tr> <tr><td> <input type="radio" value="o2" id="r2" name="check" style="width: 49px; height: 15px;" /></td> <td><input type="text" class="form-control" id="o2" style="width: 650px;" /></td></tr><tr><td><input type="radio" value="o3" id="r3" name="check" style="width: 49px; height: 15px;" /></td><td><input type="text" class="form-control" id="o3" style="width: 650px;" /></td></tr> <tr><td><input type="radio" value="o4" id="r4" name="check" style="width: 49px; height: 15px;" /></td><td><input type="text" class="form-control" id="o4" style="width: 650px;" /></td></tr></table></div></div>');
+                        $("#dic1").append('<label for="inputDescription" class=ddd>Options</label><span style="color:red" class=ddd>*</span></label>');
+                        $("#dic1").append('<div class="form-group ddd"><div class="col-md-12"><table> <tr><td><input type="radio" id="r1" value="o1" name="check" style="width: 49px; height: 15px;" /> </td><td><input type="text"  class="form-control" id="o1" style="width: 650px;" /></td></tr> <tr><td> <input type="radio" value="o2" id="r2" name="check" style="width: 49px; height: 15px;" /></td> <td><input type="text" class="form-control" id="o2" style="width: 650px;" /></td></tr><tr><td><input type="radio" value="o3" id="r3" name="check" style="width: 49px; height: 15px;" /></td><td><input type="text" class="form-control" id="o3" style="width: 650px;" /></td></tr> <tr><td><input type="radio" value="o4" id="r4" name="check" style="width: 49px; height: 15px;" /></td><td><input type="text" class="form-control" id="o4" style="width: 650px;" /></td></tr></table></div></div>');
                         $("#dic1").append('<div class="form-group ddd"><div class= "col-md-12" > <label for="marks">Marks</label><span style="color:red">*</span></div > <div class="col-md-6"><input type="number" id="marks" class="form-control space"/></div></div >');
                     });
                 }
+                //alert($('#course').val());
+                $.get("@Url.Content("Questio_data?coid=")" + $('#course').val(), function (data1) {
+                    //$("#example1").DataTable()
+                    $('#example1').dataTable().fnDestroy();
+                    $('#tblbdy').empty();
+
+                    var tr;
+                    debugger
+                    for (var i = 0; i < data1.length; i++) {
+
+                        tr = $("<tr>");
+                        tr.append("<td>" + parseInt(i+1) + "</td>");
+                        tr.append("<td>" + data1[i].QUESTION + "</td>");
+                        tr.append("<td>" + data1[i].OP1 + "</td>");
+                        tr.append("<td>" + data1[i].OP2 + "</td>");
+                        tr.append("<td>" + data1[i].OP3 + "</td>");
+                        tr.append("<td>" + data1[i].OP4 + "</td>");
+                        tr.append("<td>" + data1[i].MMarks + "</td>");
+                        if (data1[i].ANSWER == "o1") {
+                            tr.append("<td>" + data1[i].OP1 + "</td>");
+                        }
+                        else if (data1[i].ANSWER == "o2") {
+                            tr.append("<td>" + data1[i].OP2 + "</td>");
+                        }
+                        else if (data1[i].ANSWER == "o3") {
+                            tr.append("<td>" + data1[i].OP3 + "</td>");
+                        }
+                        else if (data1[i].ANSWER == "o4") {
+                            tr.append("<td>" + data1[i].OP4 + "</td>");
+                        }
+                        else {
+                            tr.append("<td>" + + "</td>");
+                        }
+                        $('#tblbdy').append(tr);
+                    }
+
+                    $("#example1").DataTable()
+                });
+
+
+
+            });
+
+            $.get("@Url.Content("GET_QNS_STATUS?Courseid=")" + $("#course").val(), function (datya1) {
             });
 
 
         }
     }
 
-    
+
 
 </script>
 
 <script>
-    function coursepost() {
-        if ($("#inputDescription").val() != "" && $("#o1").val() != "" && $("#o2").val() != "" && $("#o3").val() != "" && $("#o4").val() != "" && $("#marks").val() != "" && $('input[name="check"]:checked').val() != "") {
-            $.post("@Url.Content("~/onlineExamUI/Create_QUESTIONs")", { QUESTION: $("#inputDescription").val(), OP1: $("#o1").val(), OP2: $("#o2").val(), OP3: $("#o3").val(), OP4: $("#o4").val(), ANSWER: $("#").val(), MMarks: $("#marks").val()}, function (data) {
-                debugger
-                if (data == "1") {
-                    $("#popup").click();
-                    $("#popuph1").text("Success");
-                    $("#popuph1").css("color", "green");
-                    $("#popupp").text("Question Added Successfully...!");
-                    $("#btnok").show();
-                    $("#btnclose").css("Display", "none");
+    function Questionspost() {
+        alert($('input[name="check"]:checked').val());
+        if ($("#inputDescription").val() != "" && $("#o1").val() != "" && $("#o2").val() != "" && $("#o3").val() != "" && $("#o4").val() != "" && $("#marks").val() != "" && $('input[name=check]:checked').val() != "") {
+            $.post("@Url.Content("~/onlineExamUI/Create_QUESTIONs")", { COURSEID: $('#course').val(), QUESTION: $("#inputDescription").val(), OP1: $("#o1").val(), OP2: $("#o2").val(), OP3: $("#o3").val(), OP4: $("#o4").val(), ANSWER: $('input[name="check"]:checked').val(), MMarks: $("#marks").val() }, function (data) {
+
+                if (data.Count == "1") {
+                    getquestions();
+                    //$("#popup").click();
+                    //$("#popuph1").text("Success");
+                    //$("#popuph1").css("color", "green");
+                    //$("#popupp").text("Question Added Successfully...!");
+                    //$("#btnok").show();
+                    //$("#btnclose").css("Display", "none");
 
                 }
                 else {
@@ -222,7 +346,7 @@
             })
         }
         else {
-            debugger
+
             $('#dic1 input[type=text]').each(function () {
                 if ($(this).val() == "") {
                     $(this).next("span").remove();

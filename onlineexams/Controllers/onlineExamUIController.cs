@@ -233,6 +233,21 @@ namespace onlineexams.Controllers
 
             return Json(op, JsonRequestBehavior.AllowGet);
         }
+        public ActionResult Questio_data(string coid)
+        {
+            //Quesionarieslist colst = new Courselist();
+
+            //List<Coursereg> crlst = ff.CourseRegistration_data_();
+            //colst.lst = crlst;
+            //colst.count = crlst.Count;
+            ////return View(colst);
+
+            Quesionarieslist qnlst = new Quesionarieslist();
+            List<Questioneries>  qns = ff.Questio_data(coid);
+            qnlst.lstq = qns;
+            qnlst.count = qns.Count;
+            return Json(qns, JsonRequestBehavior.AllowGet);
+        }
 
 
         #endregion
