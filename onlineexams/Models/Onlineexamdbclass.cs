@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using System.Web.Http;
 
 namespace onlineexams.Models
 {
@@ -107,42 +108,7 @@ namespace onlineexams.Models
         #endregion
 
         #region QUESTIONERIES
-        public Outputclass Create_QUESTIONs(Questioneries qns)
-        {
-            Outputclass outputclass = new Outputclass();
-            try
-            {
-                SqlCommand cmd = new SqlCommand("Insert_QUESTIONERIES", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@COURSEID", qns.COURSEID);
-                //cmd.Parameters.AddWithValue("@QUESTIONID", qns.QUESTIONID);
-                cmd.Parameters.AddWithValue("@QUESTION", qns.QUESTION);
-                cmd.Parameters.AddWithValue("@TYPE", qns.TYPE);
-                cmd.Parameters.AddWithValue("@Marks", qns.MMarks);
-                cmd.Parameters.AddWithValue("@A", qns.OP1);
-                cmd.Parameters.AddWithValue("@B", qns.OP2);
-                cmd.Parameters.AddWithValue("@C", qns.OP3);
-                cmd.Parameters.AddWithValue("@D", qns.OP4);
-                cmd.Parameters.AddWithValue("@ANSWER", qns.ANSWER);
-                Connection();
-                int i = cmd.ExecuteNonQuery();
-                if (i > 0)
-                {
-                    outputclass.Count = i;
-                }
-                return outputclass;
-            }
-            catch (Exception ex)
-            {
-
-                outputclass.Msg = ex.ToString();
-                return outputclass;
-            }
-            finally
-            {
-                conn.Close();
-            }
-        }
+        
         #endregion
 
         #region Exam Create
@@ -719,6 +685,43 @@ namespace onlineexams.Models
 
 
         #region Course Questions Entry
+        [HttpGet]
+        public Outputclass Create_QUESTIONs(Questioneries qns)
+        {
+            Outputclass outputclass = new Outputclass();
+            try
+            {
+                SqlCommand cmd = new SqlCommand("Insert_QUESTIONERIES", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@COURSEID", qns.COURSEID);
+                //cmd.Parameters.AddWithValue("@QUESTIONID", qns.QUESTIONID);
+                cmd.Parameters.AddWithValue("@QUESTION", qns.QUESTION);
+                cmd.Parameters.AddWithValue("@TYPE", qns.TYPE);
+                cmd.Parameters.AddWithValue("@Marks", qns.MMarks);
+                cmd.Parameters.AddWithValue("@A", qns.OP1);
+                cmd.Parameters.AddWithValue("@B", qns.OP2);
+                cmd.Parameters.AddWithValue("@C", qns.OP3);
+                cmd.Parameters.AddWithValue("@D", qns.OP4);
+                cmd.Parameters.AddWithValue("@ANSWER", qns.ANSWER);
+                Connection();
+                int i = cmd.ExecuteNonQuery();
+                if (i > 0)
+                {
+                    outputclass.Count = i;
+                }
+                return outputclass;
+            }
+            catch (Exception ex)
+            {
+
+                outputclass.Msg = ex.ToString();
+                return outputclass;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
         public List<Coursereg> SHOW_COURSE_NOTNULL()
         {
             List<Coursereg> coreg = new List<Coursereg>();
@@ -822,6 +825,45 @@ namespace onlineexams.Models
                 conn.Close();
             }
         }
+
+
+        [HttpGet]
+        public Outputclass Update_QUESTIONs(Questioneries qns)
+        {
+            Outputclass outputclass = new Outputclass();
+            try
+            {
+                SqlCommand cmd = new SqlCommand("UPDATE_QUESIONARIES", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@QID", qns.QUESTIONID);
+                cmd.Parameters.AddWithValue("@QUESTION", qns.QUESTION);
+                cmd.Parameters.AddWithValue("@MARKS", qns.MMarks);
+                cmd.Parameters.AddWithValue("@A", qns.OP1);
+                cmd.Parameters.AddWithValue("@B", qns.OP2);
+                cmd.Parameters.AddWithValue("@C", qns.OP3);
+                cmd.Parameters.AddWithValue("@D", qns.OP4);
+                cmd.Parameters.AddWithValue("@ANSWER", qns.ANSWER);
+                Connection();
+                int i = cmd.ExecuteNonQuery();
+                if (i > 0)
+                {
+                    outputclass.Count = i;
+                }
+                return outputclass;
+            }
+            catch (Exception ex)
+            {
+
+                outputclass.Msg = ex.ToString();
+                return outputclass;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+
 
         #endregion
 

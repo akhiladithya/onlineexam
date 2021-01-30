@@ -206,6 +206,14 @@ namespace onlineexams.Controllers
         }
 
         #region Course Questions Entry
+        
+        [HttpPost]
+        public ActionResult Create_QUESTIONs(Questioneries qns)
+        {
+            Outputclass op = ff.Create_QUESTIONs(qns);
+
+            return Json(op, JsonRequestBehavior.AllowGet);
+        }
         public ActionResult QUestionEntry()
         {
             List<Coursereg> dd = ff.Show_Course_data();
@@ -225,14 +233,7 @@ namespace onlineexams.Controllers
             List<Questioneries> Qnstatus = ff.GET_QNS_STATUS(Courseid);
             return Json(Qnstatus, JsonRequestBehavior.AllowGet);
         }
-        //Create_QUESTIONs_
-        [HttpPost]
-        public ActionResult Create_QUESTIONs(Questioneries qns)
-        {
-            Outputclass op = ff.Create_QUESTIONs(qns);
-
-            return Json(op, JsonRequestBehavior.AllowGet);
-        }
+        
         public ActionResult Questio_data(string coid)
         {
             //Quesionarieslist colst = new Courselist();
@@ -248,7 +249,14 @@ namespace onlineexams.Controllers
             qnlst.count = qns.Count;
             return Json(qns, JsonRequestBehavior.AllowGet);
         }
+        
+        [HttpPost]
+        public ActionResult Update_QUESTIONs(Questioneries qns)
+        {
+            Outputclass op = ff.Update_QUESTIONs(qns);
 
+            return Json(op, JsonRequestBehavior.AllowGet);
+        }
 
         #endregion
 
