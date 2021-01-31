@@ -258,6 +258,15 @@ namespace onlineexams.Controllers
             return Json(op, JsonRequestBehavior.AllowGet);
         }
 
+
+        [HttpPost]
+        public ActionResult Get_databasedonqid(string Qid)
+        {
+            dynamic op = ff.Get_databasedonqid(Qid);
+
+            return Json(op, JsonRequestBehavior.AllowGet);
+        }
+
         #endregion
 
     }

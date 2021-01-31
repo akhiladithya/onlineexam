@@ -863,6 +863,45 @@ namespace onlineexams.Models
             }
         }
 
+        [HttpGet]
+        public List<Questioneries> Get_databasedonqid(string Qid)
+        {
+            List<Questioneries> Qn = new List<Questioneries>();
+            try
+            {
+                SqlCommand cmd = new SqlCommand("GETDATA_BASEDONQID", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@QID", Qid);
+                DataTable dt = new DataTable();
+                Connection();
+                SqlDataReader dr = cmd.ExecuteReader();
+
+                Questioneries Qn1;
+                while (dr.Read())
+                {
+                    Qn1 = new Questioneries();
+                    Qn1.QUESTION= dr["QUESTION"] != null ? dr["QUESTION"].ToString() : "";
+                    Qn1.ANSWER= dr["ANSWER"] != null ? dr["ANSWER"].ToString() : "";
+                    Qn1.OP1= dr["A"] != null ? dr["A"].ToString() : "";
+                    Qn1.OP2= dr["B"] != null ? dr["B"].ToString() : "";
+                    Qn1.QUESTION= dr["C"] != null ? dr["C"].ToString() : "";
+                    Qn1.OP4= dr["D"] != null ? dr["D"].ToString() : "";
+                    Qn1.MMarks= dr["MARKS"] != null ? dr["MARKS"].ToString() : "";
+                    Qn.Add(Qn1);
+                }
+                return Qn;
+            }
+            catch (Exception ex)
+            {
+
+                return null;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
 
 
         #endregion

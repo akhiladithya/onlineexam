@@ -170,6 +170,11 @@ namespace onlineexams.Controllers
             return dbcls.Update_QUESTIONs(qns);
         }
 
+        [HttpGet]
+        public List<Questioneries> Get_databasedonqid(string Qid)
+        {
+            return dbcls.Get_databasedonqid(Qid);
+        }
         #endregion
 
 
