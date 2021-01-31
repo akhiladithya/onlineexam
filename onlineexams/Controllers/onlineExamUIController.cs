@@ -249,23 +249,33 @@ namespace onlineexams.Controllers
             qnlst.count = qns.Count;
             return Json(qns, JsonRequestBehavior.AllowGet);
         }
-        
+        [HttpPost]
+        public JsonResult getquestionid(string Qid)
+        {
+            Session["QID"] = Qid;
+
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
+        [HttpGet]
+        public ActionResult GetQuestionupdate()
+        {
+            string qq = Session["QID"].ToString();
+            Questioneries dds = ff.Get_databasedonqid(qq);
+
+            return View(dds);
+
+        }
         [HttpPost]
         public ActionResult Update_QUESTIONs(Questioneries qns)
         {
+            //string qq = Session["QID"].ToString();
+            qns.QUESTIONID = Convert.ToInt32(Session["QID"].ToString());
             Outputclass op = ff.Update_QUESTIONs(qns);
 
             return Json(op, JsonRequestBehavior.AllowGet);
         }
+     
 
-
-        [HttpPost]
-        public ActionResult Get_databasedonqid(string Qid)
-        {
-            dynamic op = ff.Get_databasedonqid(Qid);
-
-            return Json(op, JsonRequestBehavior.AllowGet);
-        }
 
         #endregion
 

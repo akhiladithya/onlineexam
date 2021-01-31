@@ -148,6 +148,7 @@
             <thead>
                 <tr>
                     <th>S.NO</th>
+                    <th hidden>qid</th>
                     <th>QUESTION</th>
                     <th>Option 1</th>
                     <th>Option 2</th>
@@ -155,6 +156,7 @@
                     <th>Option 4</th>
                     <th>MARKS</th>
                     <th>Answer</th>
+                    <th>Update</th>
                 </tr>
             </thead>
             <tbody id="tblbdy">
@@ -162,6 +164,7 @@
             <tfoot>
                 <tr>
                     <th>S.NO.</th>
+                    <th hidden>qid</th>
                     <th>QUESTION</th>
                     <th>Option 1</th>
                     <th>Option 2</th>
@@ -169,6 +172,7 @@
                     <th>Option 4</th>
                     <th>MARKS</th>
                     <th>Answer</th>
+                    <th>Update</th>
                 </tr>
             </tfoot>
         </table>
@@ -259,7 +263,7 @@
                         var question = parseInt(data[0].Qnscount)+1;
                         $("h3").text("Question.No : "+ question);
                        $("#content1").css("display", "block");
-                        $("#dic1").append('<div class="form-group ddd"><div class= "col-md-12" > <label for="inputDescription">Question</label><span style="color:red">*</span></div > <div class="col-md-12"><textarea id="inputDescription" class="form-control space" rows="4"></textarea></div></div >');
+                        $("#dic1").append('<div class="form-group ddd"><div class= "col-md-12" > <label for="inputDescription">Question</label><span style="color:red">*</span></div > <div class="col-md-12"><textarea id="inputDescription" class="form-control space" rows="4"></textarea></div></div>');
                         $("#dic1").append('<label for="inputDescription" class=ddd>Options</label><span style="color:red" class=ddd>*</span></label>');
                         $("#dic1").append('<div class="form-group ddd"><div class="col-md-12"><table> <tr><td><input type="radio" id="r1" value="o1" name="check" style="width: 49px; height: 15px;" /> </td><td><input type="text"  class="form-control" id="o1" style="width: 650px;" /></td></tr> <tr><td> <input type="radio" value="o2" id="r2" name="check" style="width: 49px; height: 15px;" /></td> <td><input type="text" class="form-control" id="o2" style="width: 650px;" /></td></tr><tr><td><input type="radio" value="o3" id="r3" name="check" style="width: 49px; height: 15px;" /></td><td><input type="text" class="form-control" id="o3" style="width: 650px;" /></td></tr> <tr><td><input type="radio" value="o4" id="r4" name="check" style="width: 49px; height: 15px;" /></td><td><input type="text" class="form-control" id="o4" style="width: 650px;" /></td></tr></table></div></div>');
                         $("#dic1").append('<div class="form-group ddd"><div class= "col-md-12" > <label for="marks">Marks</label><span style="color:red">*</span></div > <div class="col-md-6"><input type="number" id="marks" class="form-control space"/></div></div >');
@@ -272,17 +276,20 @@
                     $('#tblbdy').empty();
 
                     var tr;
-                    debugger
+                    //debugger
                     for (var i = 0; i < data1.length; i++) {
 
                         tr = $("<tr>");
-                        tr.append("<td>" + parseInt(i+1) + "</td>");
+                        tr.append("<td>" + parseInt(i + 1) + "</td>");
+                        tr.append("<td hidden>" + data1[i].QUESTIONID + "</td>");
                         tr.append("<td>" + data1[i].QUESTION + "</td>");
                         tr.append("<td>" + data1[i].OP1 + "</td>");
                         tr.append("<td>" + data1[i].OP2 + "</td>");
                         tr.append("<td>" + data1[i].OP3 + "</td>");
                         tr.append("<td>" + data1[i].OP4 + "</td>");
                         tr.append("<td>" + data1[i].MMarks + "</td>");
+                       
+                     
                         if (data1[i].ANSWER == "o1") {
                             tr.append("<td>" + data1[i].OP1 + "</td>");
                         }
@@ -298,6 +305,7 @@
                         else {
                             tr.append("<td>" + + "</td>");
                         }
+                        tr.append('<td><i style="" onclick="getquestion(' + data1[i].QUESTIONID + ')" class="fa fa-edit"> [Update]</i></td>');
                         $('#tblbdy').append(tr);
                     }
 
@@ -417,6 +425,19 @@
 
 
 
+</script>
+<script>
+    function getquestion(dd) {
+
+        $.post("@Url.Content("~/onlineExamUI/getquestionid")", { Qid: dd }, function (data) {
+            if (data == true) {
+                window.location.href = ("GetQuestionupdate");
+            }
+
+
+        })
+
+    }
 </script>
 
 

@@ -171,7 +171,7 @@ namespace onlineexams.Controllers
         }
 
         [HttpGet]
-        public List<Questioneries> Get_databasedonqid(string Qid)
+        public Questioneries Get_databasedonqid(string Qid)
         {
             return dbcls.Get_databasedonqid(Qid);
         }

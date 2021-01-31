@@ -2358,6 +2358,7 @@
     <Content Include="Views\onlineExamUI\popup.cshtml" />
     <Content Include="Views\onlineExamUI\NOFQNSENTRY.cshtml" />
     <Content Include="Views\onlineExamUI\QUestionEntry.cshtml" />
+    <Content Include="Views\onlineExamUI\GetQuestionupdate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
