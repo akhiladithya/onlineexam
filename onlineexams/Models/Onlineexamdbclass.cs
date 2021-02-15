@@ -162,6 +162,7 @@ namespace onlineexams.Models
                 cmd.Parameters.AddWithValue("@COURSEDURATION", usercouass.COURSEDURATION);
                 cmd.Parameters.AddWithValue("@EXAMSTATUSASSIGN", usercouass.EXAMSTATUSASSIGN);
                 cmd.Parameters.AddWithValue("@STATUS", usercouass.STATUS);
+                cmd.Parameters.AddWithValue("@TRANSACTIONID", usercouass.TRANSACTIONID);
                 Connection();
                 int i = cmd.ExecuteNonQuery();
                 if (i > 0)
@@ -181,6 +182,49 @@ namespace onlineexams.Models
                 conn.Close();
             }
         }
+
+        [HttpGet]
+        public List<Usercourseassign> Get_userassigndata()
+        {
+            List<Usercourseassign> Uca = new List<Usercourseassign>();
+            try
+            {
+                SqlCommand cmd = new SqlCommand("GET_USERCOURSEASSIGN", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                DataTable dt = new DataTable();
+                Connection();
+                SqlDataReader dr = cmd.ExecuteReader();
+                Usercourseassign Uca1;
+
+                while (dr.Read())
+                {
+                    Uca1 = new Usercourseassign(); 
+                    Uca1.USERID = dr["USERID"] != null ? Convert.ToInt32(dr["USERID"]) : 0;
+                    Uca1.COURSEID = dr["COURSEID"] != null ? Convert.ToInt32(dr["COURSEID"]) : 0;
+                    Uca1.DATEOFAPPROVE = dr["DATEOFAPPROVE"] != null ? dr["DATEOFAPPROVE"].ToString() : "";
+                    Uca1.COURSEENDDATE = dr["COURSEENDDATE"] != null ? dr["COURSEENDDATE"].ToString() : "";
+                    Uca1.COURSEDURATION = dr["COURSEDURATION"] != null ? dr["COURSEDURATION"].ToString() : "";
+                    Uca1.EXAMSTATUSASSIGN = dr["EXAMSTATUSASSIGN"] != null ? dr["EXAMSTATUSASSIGN"].ToString() : "";
+                    Uca1.STATUS = dr["STATUS"] != null ? dr["STATUS"].ToString() : "";
+                    Uca1.TRANSACTIONID = dr["TRANSACTIONID"] != null ? dr["TRANSACTIONID"].ToString() : "";
+                    Uca.Add(Uca1);
+                }
+                return Uca;
+            }
+            catch (Exception ex)
+            {
+
+                return null;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+
+
+
         #endregion
 
         #region AUDITTRAILS

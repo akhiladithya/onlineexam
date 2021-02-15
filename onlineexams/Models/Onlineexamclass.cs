@@ -62,6 +62,7 @@ namespace onlineexams.Models
         public string COURSEDURATION { get; set; }
         public string EXAMSTATUSASSIGN { get; set; }
         public string STATUS { get; set; }
+        public string TRANSACTIONID { get; set; }
     }
     public class Examtable
     {
