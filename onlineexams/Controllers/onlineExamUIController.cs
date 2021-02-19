@@ -274,10 +274,32 @@ namespace onlineexams.Controllers
 
             return Json(op, JsonRequestBehavior.AllowGet);
         }
-     
+
 
 
         #endregion
+
+        [HttpGet]
+        public ActionResult Get_cources_usercourseassign()
+        {
+
+            Coursereg qnlst = new Coursereg();
+            List<Coursereg> qns = ff.Get_cources_usercourseassign();
+            
+            return Json(qns, JsonRequestBehavior.AllowGet);
+        }
+        [HttpGet]
+        public ActionResult Get_userassigndata()
+        {
+
+            Usercourseassign qnlst = new Usercourseassign();
+            List<Usercourseassign> qns = ff.Get_userassigndata();
+            
+            return Json(qns, JsonRequestBehavior.AllowGet);
+        }
+
+
+
 
     }
 }

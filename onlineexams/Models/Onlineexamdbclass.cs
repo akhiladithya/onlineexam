@@ -148,6 +148,44 @@ namespace onlineexams.Models
         #endregion
 
         #region User Course Assign
+
+        
+
+        [HttpGet]
+        public List<Coursereg> Get_cources_usercourseassign()
+        {
+            List<Coursereg> Uca = new List<Coursereg>();
+            try
+            {
+                SqlCommand cmd = new SqlCommand("GET_COURSES", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                DataTable dt = new DataTable();
+                Connection();
+                SqlDataReader dr = cmd.ExecuteReader();
+                Coursereg Uca1;
+
+                while (dr.Read())
+                {
+                    Uca1 = new Coursereg();
+                   Uca1.Courseid= dr["COURSEID"] != null ? Convert.ToInt32(dr["COURSEID"]) : 0;
+                    Uca1.COURSENAME = dr["COURSENAME"] != null ? dr["COURSENAME"].ToString() : "";
+                    Uca.Add(Uca1);
+                }
+                return Uca;
+            }
+            catch (Exception ex)
+            {
+
+                return null;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+
+
         public Outputclass Create_CourseAssign(Usercourseassign usercouass)
         {
             Outputclass outputclass = new Outputclass();
