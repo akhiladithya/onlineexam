@@ -59,6 +59,7 @@ namespace onlineexams.Controllers
             return dbcls.CourseRegistration_data();
         }
         #endregion
+
         #region Course Name Exists or not
         public bool Course_Isexistornot(string cname)
         {
@@ -112,6 +113,7 @@ namespace onlineexams.Controllers
             return dbcls.Update_Course(coureg);
         }
         #endregion
+
         #region Question Entery
         public List<Coursereg> Show_Course_data()
         {
