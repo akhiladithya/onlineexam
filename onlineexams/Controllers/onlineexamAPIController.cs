@@ -26,15 +26,29 @@ namespace onlineexams.Controllers
         }
         #endregion
 
-        #region Create Questions
-        
-        #endregion
+
 
         #region Create Course Assign
+
+        [HttpGet]
+        public List<Coursereg> Get_cources_usercourseassign()
+        {
+            return dbcls.Get_cources_usercourseassign();
+        }
+
         public Outputclass Create_QUESTIONs_(Usercourseassign usas)
         {
             return dbcls.Create_CourseAssign(usas);
         }
+
+        [HttpGet]
+        public List<Usercourseassign> Get_userassigndata()
+        {
+            return dbcls.Get_userassigndata();
+        }
+
+
+
         #endregion
 
         #region Create Exam
