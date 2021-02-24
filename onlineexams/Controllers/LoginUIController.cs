@@ -38,8 +38,15 @@ namespace onlineexams.Controllers
                     userreg = Log.Logincred_(dd);
 
                 }
+                if (userreg1.Role != "ADMIN")
+                {
+                    return RedirectToAction("DashBoard", "layout");
+                }
+                {
+                    return RedirectToAction("data", "layout");
 
-                return RedirectToAction("data", "layout");
+                }
+               
             }
             else
             {

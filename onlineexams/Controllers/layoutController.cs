@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using onlineexams.Models;
 
 namespace onlineexams.Controllers
 {
     public class layoutController : Controller
     {
+        onlineexamAPIController ff = new onlineexamAPIController();
         // GET: layout
         public ActionResult Index()
         {
@@ -16,6 +18,14 @@ namespace onlineexams.Controllers
         public ActionResult data()
         {
             return View();
+        }
+        public ActionResult DashBoard()
+        {
+            Courselist colst = new Courselist();
+            List<Coursereg> crlst = ff.CourseRegistration_data_();
+            colst.lst = crlst;
+            colst.count = crlst.Count;
+            return View(colst);
         }
     }
 }

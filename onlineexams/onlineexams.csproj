@@ -193,6 +193,7 @@
     <Content Include="dist\img\avatar5.png" />
     <Content Include="dist\img\boxed-bg.jpg" />
     <Content Include="dist\img\boxed-bg.png" />
+    <Content Include="dist\img\calibration-services.jpg" />
     <Content Include="dist\img\credit\american-express.png" />
     <Content Include="dist\img\credit\cirrus.png" />
     <Content Include="dist\img\credit\mastercard.png" />
@@ -211,6 +212,7 @@
     <Content Include="dist\img\prod-3.jpg" />
     <Content Include="dist\img\prod-4.jpg" />
     <Content Include="dist\img\prod-5.jpg" />
+    <Content Include="dist\img\toby-tee-untitled-1.gif" />
     <Content Include="dist\img\user1-128x128.jpg" />
     <Content Include="dist\img\user2-160x160.jpg" />
     <Content Include="dist\img\user3-128x128.jpg" />
@@ -2359,6 +2361,8 @@
     <Content Include="Views\onlineExamUI\NOFQNSENTRY.cshtml" />
     <Content Include="Views\onlineExamUI\QUestionEntry.cshtml" />
     <Content Include="Views\onlineExamUI\GetQuestionupdate.cshtml" />
+    <Content Include="Views\Shared\_LayoutPage2.cshtml" />
+    <Content Include="Views\layout\DashBoard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

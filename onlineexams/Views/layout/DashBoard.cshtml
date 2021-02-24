@@ -1,0 +1,108 @@
+﻿@model onlineexams.Models.Courselist
+@{
+    ViewBag.Title = "DashBoard";
+    Layout = "~/Views/Shared/_LayoutPage2.cshtml";
+
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Greeting Message</title>
+</head>
+<body>
+    <div style="align-items:center">
+        <h3>Courses</h3>
+    </div>
+    <div class="row">
+        @foreach (var item in Model.lst)
+        {
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-success">
+                    <div class="inner">
+                        <h3>@item.COURSENAME<sup style="font-size: 20px"></sup></h3>
+
+                        <p>@item.COURSENAME</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-stats-bars"></i>
+                    </div>
+                    <a href="#" onclick="getdetails(@item.Courseid)" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+        }
+    </div>
+</body>
+
+
+</html>
+
+<div class="container" id="modal">
+    <div class="row">
+        <a class="btn btn-primary" id="popup" data-toggle="modal" style="display:none;" href="#ignismyModal">open Popup</a>
+        <div class="modal fade" id="ignismyModal" role="dialog" >
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        @*<button type="button" class="close" data-dismiss="modal" aria-label=""><span>×</span></button>*@
+                    </div>
+
+                    <div class="modal-body">
+
+                        <div class="thank-you-pop">
+                            @*<img src="http://goactionstations.co.uk/wp-content/uploads/2017/03/Green-Round-Tick.png" alt="">*@
+                            <h1 id="popuph1"> Success</h1>
+                            <p id="popupp"> </p>
+                            <p id="popupp1"> </p>
+                            <p id="popupp2"> </p>
+                            <p id="popupp3"> </p>
+                            <p id="popupp4"> </p>
+                            <!--<h3 class="cupon-pop">-->@*Your Id: <span>12345</span>*@<!--</h3>-->
+                            <button id="btnok" class="close" style="display:none" data-dismiss="modal">OK</button>
+                            <button id="btnclose" class="close" style="display:none" data-dismiss="modal">OK</button>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+
+<script>
+    $('#popup').click(function () {
+        $('#ignismyModal').modal({
+            backdrop: 'static'
+        });
+    });
+
+    function getdetails(couseid) {
+
+        //alert(couseid);
+        $.post("@Url.Content("~/onlineExamUI/getcoursedetails")", { cid: couseid}, function (data) {
+              if (data) {
+                  debugger
+                  $("#popup").click();
+                  $("#popuph1").text(data.COURSENAME);
+                  $("#popuph1").css("color", "green");
+                  $("#popupp").text("Trainer:"+data.TRAINERNAME);
+                  $("#popupp1").text("No.of.days:" + data.COURSEPERID);
+                  $("#popupp2").text("start date:" + data.COURSEFROMDATE);
+                  $("#popupp3").text("Course Importance:" + data.COURSEIMPORTANCE);
+                  $("#popupp4").text("COURSE AMOUNT:" + data.COURSEAMOUNT);
+                  $("#btnok").show();
+                  $("#btnclose").css("Display", "none");
+                 //window.location.href='@Url.Content("~/onlineExamUI/UpadateCourse")'
+              }
+
+         })
+
+
+
+    }
+</script>
+
+

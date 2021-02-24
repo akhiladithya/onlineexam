@@ -102,6 +102,14 @@ namespace onlineexams.Controllers
             dd = crlst.Where(a => a.Courseid == dd.Courseid).FirstOrDefault();
             return View(dd);
         }
+        public JsonResult getcoursedetails(string cid)
+        {
+            List<Coursereg> crlst = ff.CourseRegistration_data_();
+            Coursereg dd = new Coursereg();
+            dd.Courseid = Convert.ToInt32(cid);
+            dd = crlst.Where(a => a.Courseid == dd.Courseid).FirstOrDefault();
+            return Json(dd, JsonRequestBehavior.AllowGet);
+        }
 
         public JsonResult Course_Isexistornot(string cname)
         {
@@ -298,7 +306,7 @@ namespace onlineexams.Controllers
             return Json(qns, JsonRequestBehavior.AllowGet);
         }
 
-
+        
 
 
     }
