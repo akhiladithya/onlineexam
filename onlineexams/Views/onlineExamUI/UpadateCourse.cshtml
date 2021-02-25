@@ -134,7 +134,8 @@
                                 <label>Course Trainer Name</label><span style="color:red">*</span>
                             </div>
                             <div class="col-md-6">
-                                <input type="text" class="form-control space" value="@Model.TRAINERNAME" id="ctr" />
+                                @*<input type="text" class="form-control space" value="@Model.TRAINERNAME" id="ctr" />*@
+                                <textarea id="ctr" class="form-control space" rows="4">@Model.TRAINERNAME</textarea>
                             </div>
                         </div>
                         <div class="form-group" hidden>
@@ -271,6 +272,13 @@
     };
 </script>
 <script>
+    $('#popup').click(function () {
+        $('#ignismyModal').modal({
+            backdrop: 'static'
+        });
+    });
+
+
    function update() {
 
 

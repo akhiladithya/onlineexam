@@ -237,7 +237,13 @@
     };
 </script>
 <script>
-   function Questionspost() {
+    function Questionspost() {
+        $('#popup').click(function () {
+            $('#ignismyModal').modal({
+                backdrop: 'static'
+            });
+        });
+
         //alert($('input[name="check"]:checked').val());
        if ($("#inputDescription").val() != "" && $("#o1").val() != "" && $("#o2").val() != "" && $("#o3").val() != "" && $("#o4").val() != "" && $("#marks").val() != "" && $('input[name=check]:checked').val() != "") {
            $.post("@Url.Content("~/onlineExamUI/Update_QUESTIONs")", { QUESTION: $("#inputDescription").val(), OP1: $("#o1").val(), OP2: $("#o2").val(), OP3: $("#o3").val(), OP4: $("#o4").val(), ANSWER: $('input[name="check"]:checked').val(), MMarks: $("#marks").val() }, function (data) {

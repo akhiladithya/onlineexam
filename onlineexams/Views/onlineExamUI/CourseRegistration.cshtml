@@ -173,6 +173,13 @@
 </script>
 
 <script>
+    $('#popup').click(function () {
+        $('#ignismyModal').modal({
+            backdrop: 'static'
+        });
+    });
+
+
     function coursepost() {
         if ($("#inputName").val() != "" && $("#ndays").val() != "" && $("#startdate").val() != "" && $("#enddate").val() != "" && $("#camt").val() != "" && $("#inputDescription").val() != "" && $("#Trainer").val() != "" && check == true) {
             $.post("@Url.Content("~/onlineExamUI/coursepost")", { COURSENAME: $("#inputName").val(), COURSEPERID: $("#ndays").val(), COURSEFROMDATE: $("#startdate").val(), COURSETODATE: $("#enddate").val(), COURSEAMOUNT: $("#camt").val(), Description: $("#inputDescription").val(), TRAINERNAME: $("#Trainer").val(), COURSEIMPORTANCE: $("#Importance").val() }, function (data) {
@@ -306,7 +313,7 @@
                     </div>
                     @*<label for="inputName">Course Name</label>*@
                 <div class="col-md-6">
-                    <input type="text" id="inputName" onkeyup="isexist()" class="form-control space"  maxlength="15" >
+                    <input type="text" id="inputName" onkeyup="isexist()" class="form-control space"> @*maxlength="15"*@
                     <font id="vcoursename" style="color:red ;display:none"></font>
                 </div>
                    
@@ -366,7 +373,8 @@
                         <label for="Trainer">Course Trainer Name</label><span style="color:red">*</span>
                     </div>
                     <div class="col-md-6">
-                        <input type="text" id="Trainer" class="form-control space">
+                        @*<input type="text" id="Trainer" class="form-control space">*@
+                        <textarea id="Trainer" class="form-control space" rows="4"></textarea>
                     </div>
                 </div>
 

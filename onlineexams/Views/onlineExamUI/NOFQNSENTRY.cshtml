@@ -172,6 +172,12 @@
     }
 
     function enterQuest() {
+        $('#popup').click(function () {
+            $('#ignismyModal').modal({
+                backdrop: 'static'
+            });
+        });
+
         if ($("#course").val() != "" && $("#txtQ").val() > 0) {
 
 
