@@ -68,6 +68,11 @@
 <script>
     var check = "";
     $(function () {
+        $('#popup').click(function () {
+            $('#ignismyModal').modal({
+                backdrop: 'static'
+            });
+        });
         $("#example1").DataTable();
         $("#click").click();
         $('.space').on('keydown', function (e) {
@@ -173,16 +178,12 @@
 </script>
 
 <script>
-    $('#popup').click(function () {
-        $('#ignismyModal').modal({
-            backdrop: 'static'
-        });
-    });
+
 
 
     function coursepost() {
-        if ($("#inputName").val() != "" && $("#ndays").val() != "" && $("#startdate").val() != "" && $("#enddate").val() != "" && $("#camt").val() != "" && $("#inputDescription").val() != "" && $("#Trainer").val() != "" && check == true) {
-            $.post("@Url.Content("~/onlineExamUI/coursepost")", { COURSENAME: $("#inputName").val(), COURSEPERID: $("#ndays").val(), COURSEFROMDATE: $("#startdate").val(), COURSETODATE: $("#enddate").val(), COURSEAMOUNT: $("#camt").val(), Description: $("#inputDescription").val(), TRAINERNAME: $("#Trainer").val(), COURSEIMPORTANCE: $("#Importance").val() }, function (data) {
+        if ($("#inputName").val() != "" && $("#ndays").val() != "" && $("#startdate").val() != "" && $("#enddate").val() != "" && $("#camt").val() != "" && $("#inputDescription").val() != "" && $("#courseduration").val() != "" && $("#Trainer").val() != "" && check == true) {
+            $.post("@Url.Content("~/onlineExamUI/coursepost")", { COURSENAME: $("#inputName").val(), COURSEPERID: $("#ndays").val(), COURSEFROMDATE: $("#startdate").val(), COURSETODATE: $("#enddate").val(), COURSEAMOUNT: $("#camt").val(), Description: $("#inputDescription").val(), TRAINERNAME: $("#Trainer").val(), COURSEIMPORTANCE: $("#Importance").val(), COURSEDURATIONINHRS: $("#courseduration").val() }, function (data) {
                 debugger
                 if (data == "1") {
                     $("#popup").click();
@@ -370,6 +371,14 @@
                 </div>
                 <div class="form-group">
                     <div class="col-md-6">
+                        <label for="enddate">Course Duration(In Hours)</label>
+                    </div>
+                    <div class="col-md-6">
+                        <input type="text" id="courseduration" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-6">
                         <label for="Trainer">Course Trainer Name</label><span style="color:red">*</span>
                     </div>
                     <div class="col-md-6">
@@ -414,6 +423,7 @@
                     <th>Course Description</th>
                     <th>Course Start Date</th>
                     <th>Course End Date</th>
+                    <th>Course Duration(In Hours)</th>
                     <th>Course Period</th>
                     <th>Course Price</th>
                     <th>Course Trainer Name</th>
@@ -432,6 +442,7 @@
                         <td>@item.Description</td>
                         <td>@item.COURSEFROMDATE</td>
                         <td>@item.COURSETODATE</td>
+                        <td>@item.COURSEDURATIONINHRS</td>
                         <td>@item.COURSEPERID</td>
                         <td>@item.COURSEAMOUNT</td>
                         <td>@item.TRAINERNAME</td>

@@ -38,6 +38,7 @@ namespace onlineexams.Models
         public string COURSEPERID { get; set; }
         public string COURSEFROMDATE { get; set; }
         public string COURSETODATE { get; set; }
+        public string COURSEDURATIONINHRS { get; set; }
         public string NUMBEROSQUETIONS { get; set; }
         public string NUMBEROFDAYS { get; set; }
         public string TOTALMARKS { get; set; }

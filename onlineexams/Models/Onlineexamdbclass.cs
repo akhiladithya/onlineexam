@@ -86,6 +86,7 @@ namespace onlineexams.Models
                 cmd.Parameters.AddWithValue("@COURSEAMOUNT", coureg.COURSEAMOUNT);
                 cmd.Parameters.AddWithValue("@TRAINER", coureg.TRAINERNAME);
                 cmd.Parameters.AddWithValue("@COURSEIMPORTANCE", coureg.COURSEIMPORTANCE);
+                cmd.Parameters.AddWithValue("@DURATIONINHOURS", coureg.COURSEDURATIONINHRS);
                 Connection();
                 int i = cmd.ExecuteNonQuery();
                 if (i > 0)
@@ -396,6 +397,7 @@ namespace onlineexams.Models
                     coureglist1.TRAINERNAME = dr["COURSETRAINER"] != null ? dr["COURSETRAINER"].ToString() : "";
                     coureglist1.COURSEAMOUNT = dr["COURSEAMOUNT"] != null ? dr["COURSEAMOUNT"].ToString() : "";
                     coureglist1.COURSEIMPORTANCE = dr["courseimportance"] != null ? dr["courseimportance"].ToString() : "";
+                    coureglist1.COURSEDURATIONINHRS = dr["Duration_hours"] != null ? dr["Duration_hours"].ToString() : "";
                     coureglist.Add(coureglist1);
                 }
                 return coureglist;

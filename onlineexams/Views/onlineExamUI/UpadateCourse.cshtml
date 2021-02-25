@@ -184,6 +184,12 @@
     $(function () {
         //$("#example1").DataTable();
         //$("#click").click();
+        $('#popup').click(function () {
+            $('#ignismyModal').modal({
+                backdrop: 'static'
+            });
+        });
+
         $('.space').on('keydown', function (e) {
             if (e.which === 32 && e.target.selectionStart === 0) {
                 return false;
@@ -272,12 +278,7 @@
     };
 </script>
 <script>
-    $('#popup').click(function () {
-        $('#ignismyModal').modal({
-            backdrop: 'static'
-        });
-    });
-
+   
 
    function update() {
 
