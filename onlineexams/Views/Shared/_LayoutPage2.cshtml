@@ -58,7 +58,7 @@
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="#" class="nav-link">@formateroles.Role</a>
+                    <a href="#" class="nav-link">@formateroles.Userid</a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
                     <a href="~/LoginUI/Logout" class="nav-link">Logout</a>
@@ -197,7 +197,7 @@
                      alt="AdminLTE Logo"
                      class="brand-image img-circle elevation-3"
                      style="opacity: .8">
-                <span class="brand-text font-weight-light">AdminLTE 3</span>
+                <span class="brand-text font-weight-light">Online Trainee</span>
             </a>
 
             <!-- Sidebar -->
@@ -227,30 +227,15 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="~/onlineExamUI/getuserslist" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Users List</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="~/onlineExamUI/CourseRegistration" class="nav-link">
+                                    <a href="~/onlineExamUI/UsercourseAssigning" id="active" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Course Registration</p>
                                     </a>
                                 </li>
 
-                                <li class="nav-item">
-                                    <a href="~/onlineExamUI/NOFQNSENTRY" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Quesion Number Entry</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="~/onlineExamUI/QUestionEntry" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Course Questions Entry</p>
-                                    </a>
-                                </li>
+
+
+
                             </ul>
                         </li>
                         @*<li class="nav-item">
@@ -796,6 +781,16 @@
     <!-- ./wrapper -->
     <!-- jQuery -->
     @*<script src="~/plugins/jquery/jquery.min.js"></script>*@
+    @*<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#active").click(function () {
+                $("#active").removeClass("nav-link");
+               
+                $("#active").addClass("nav-link Active");
+            });
+        });
+    </script>*@
     <script src="~/docs/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="~/plugins/datatables/jquery.dataTables.js"></script>
     <script src="~/plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
@@ -808,6 +803,7 @@
     <!-- AdminLTE for demo purposes -->
     <script src="~/dist/js/demo.js"></script>
     @*<script src="../../dist/js/demo.js"></script>*@
+    
 </body>
 </html>
 

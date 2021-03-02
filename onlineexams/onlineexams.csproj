@@ -2363,6 +2363,7 @@
     <Content Include="Views\onlineExamUI\GetQuestionupdate.cshtml" />
     <Content Include="Views\Shared\_LayoutPage2.cshtml" />
     <Content Include="Views\layout\DashBoard.cshtml" />
+    <Content Include="Views\onlineExamUI\UsercourseAssigning.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

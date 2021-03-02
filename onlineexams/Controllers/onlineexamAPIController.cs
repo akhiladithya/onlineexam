@@ -193,6 +193,11 @@ namespace onlineexams.Controllers
         }
         #endregion
 
+        public Outputclass Insert_transid(Usercourseassign usercouass)
+        {
+            return dbcls.Insert_transid(usercouass);
+        }
+
 
     }
 }

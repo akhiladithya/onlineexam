@@ -1,0 +1,307 @@
+﻿
+@{
+    ViewBag.Title = "UsercourseAssigning";
+    Layout = "~/Views/Shared/_LayoutPage2.cshtml";
+    var courses = ViewBag.getcourses;
+}
+
+<link href="~/plugins/select2/css/select2.min.css" rel="stylesheet" />
+<link href="~/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css" rel="stylesheet" />
+<style>
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+
+    span.span3 {
+        display: block;
+        color: red;
+        float: right;
+        top: -27px;
+        margin: 0 0 0 20px;
+        padding: 3px 10px;
+        color: #CE5454;
+        border-radius: 3px 4px 4px 3px;
+        /*background-color: #CE5454;*/
+        max-width: 280px;
+        position: relative;
+        margin-bottom: -20px;
+        opacity: 3;
+        left: 200px;
+    }
+</style>
+
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="card card-default">
+            <div class="card-header">
+                <h3 class="card-title">Course Request</h3>
+
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+                    @*<button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-remove"></i></button>*@
+                </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6" id="dic">
+                        <div class="form-group">
+                            <label>Select Course</label><span style="color:red">*</span>
+                            <select class="form-control space1" onchange="getquestions()" id="course" style="width: 100%;">
+                                <option value="">--Select Course---</option>
+                                @foreach (var item in courses)
+                                {
+                                    <option value="@item.Value">@item.Text</option>
+
+                                }
+                            </select>
+                        </div>
+                        <!-- /.form-group -->
+                        <div class="form-group" id="txtqq1" style="display:none">
+                            <label style="font-size:x-large"><b>Trainer : </b></label><label id="dd" style="margin-left:1em;"></label><br />
+                            <label style="font-size:x-large"><b>No.of.days : </b></label><label id="dd1" style="margin-left:1em;"></label><br />
+                            <label style="font-size:x-large"><b>start date :</b></label><label id="dd2" style="margin-left:1em;"></label><br />
+                            <label style="font-size:x-large"><b>Course Importance : </b></label><label id="dd3" style="margin-left:1em;"></label><br />
+                            <label style="font-size:x-large"><b>COURSE AMOUNT :</b></label><label id="dd4" style="margin-left:1em;"></label>
+
+                            @*<lable><b>Trainer :</b></lable> <span id="dd"> </span><br />*@
+                            @*<lable><b>No.of.days :</b></lable> <span id="dd1"> </span><br />
+        <lable><b>start date :</b></lable> <span id="dd2"> </span><br />
+        <lable><b>Course Importance :</b></lable> <span id="dd3"> </span><br />
+        <lable><b>COURSE AMOUNT :</b></lable> <span id="dd4"> </span>*@
+
+                            <div class="form-group">
+                                <label>Transaction ID</label><span style="color:red">*</span>
+                                <input type="text" class="form-control" id="transaction" />
+                            </div>
+
+                        </div>
+                     
+                        <!-- /.form-group -->
+                    </div>
+                    <!-- /.col -->
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+                <!-- /.row -->
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer">
+                <input type="button" class="form-control btn-primary" onclick="enterQuest()" value="Submit" />
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="container">
+    <div class="row">
+        <a class="btn btn-primary" id="popup" data-toggle="modal" style="display:none" href="#ignismyModal">open Popup</a>
+        <div class="modal fade" id="ignismyModal" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        @*<button type="button" class="close" data-dismiss="modal" aria-label=""><span>×</span></button>*@
+                    </div>
+
+                    <div class="modal-body">
+
+                        <div class="thank-you-pop">
+                            @*<img src="http://goactionstations.co.uk/wp-content/uploads/2017/03/Green-Round-Tick.png" alt="">*@
+                            <h1 id="popuph1"> Success</h1>
+                            <p id="popupp"> </p>
+                            <!--<h3 class="cupon-pop">-->@*Your Id: <span>12345</span>*@<!--</h3>-->
+                            <button id="btnok" class="close" style="display:none" onclick="Reload()">OK</button>
+                            <button id="btnclose" class="close" style="display:none" data-dismiss="modal">OK</button>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/docs/assets/plugins/jquery/jquery.min.js"></script>
+<script src="~/plugins/select2/js/select2.full.min.js"></script>
+@*<script src="~/docs/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>*@
+@*<script src="~/Scripts/jquery-3.4.1.min.js"></script>*@
+
+<script>
+    $(function () {
+        //debugger
+        $(".space1").select2()
+
+        //Initialize Select2 Elements
+        $('.space1').select2({
+            theme: 'bootstrap4'
+        })
+        $('.space').on('keydown', function (e) {
+            if (e.which === 32 && e.target.selectionStart === 0) {
+                return false;
+            }
+        });
+        $(".space").on("keyup", function () {
+            if ($(this).val() != "") {
+                $(this).next("span").remove();
+
+                $(this).css('border', '');
+            }
+            else {
+
+                $(this).next("span").remove();
+
+                $(this).css('border', '1px solid red');
+
+            }
+        });
+    });
+
+    function getquestions() {
+        if ($("#course").val() != "") {
+            debugger
+            $.get("@Url.Content("getcoursedetails?cid=")" + $("#course").val(), function (data) {
+              //  alert(data);
+                    $("#txtqq1").css("display", "block");
+                    $("#dd").text(" "+data.TRAINERNAME);
+                    $("#dd1").text(" "+data.COURSEPERID);
+                    $("#dd2").text(" "+data.COURSEFROMDATE);
+                    $("#dd3").text(" "+data.COURSEIMPORTANCE);
+                    $("#dd4").text(" "+data.COURSEAMOUNT);
+                
+               
+            })
+
+
+
+        }
+    }
+
+    function enterQuest() {
+        $('#popup').click(function () {
+            $('#ignismyModal').modal({
+                backdrop: 'static'
+            });
+        });
+
+        if ($("#course").val() != "" && $("#transaction").val() != "") {
+
+
+
+                //alert();
+            $.post("@Url.Content("Insert_transid")", { COURSEID: $("#course").val(), TRANSACTIONID: $("#transaction").val() }, function (data) {
+                if (data.Count > 0) {
+                        $("#popup").click();
+                        $("#popuph1").text("Success");
+                        $("#popuph1").css("color", "green");
+                        $("#popupp").text("Course Requested  Successfully...!");
+                        $("#btnok").show();
+                        $("#btnclose").css("Display", "none");
+
+                    }
+                    else {
+                        $("#popup").click();
+                        $("#popuph1").text("Failed");
+                        $("#popuph1").css("color", "red");
+                        $("#popupp").text("Something Went Wrong....");
+                        $("#btnok").css("Display", "none");
+                        $("#btnclose").show();
+                    }
+
+                })
+
+        }
+        else {
+            debugger
+            $('#dic input[type=text]').each(function () {
+                if ($(this).val() == "") {
+                    $(this).next("span").remove();
+
+                    $(this).css('border', '1px solid red');
+                }
+            });
+            $('#dic input[type=number]').each(function () {
+                if ($(this).val() == "") {
+                   // $(this).next("span").remove();
+
+                    $(this).css('border', '1px solid red');
+                }
+            });
+            $('#dic select').each(function () {
+                debugger
+                if ($(this).val() == "") {
+                    //$(this).next("span").remove();
+
+                    $(this).css('border', '1px solid red');
+                }
+            });
+
+            $("#popup").click();
+            $("#popuph1").text("Warining..?");
+            $("#popuph1").css("color", "Yellow");
+            $("#popupp").text("Please Enter All Mandatory fields");
+            $("#btnok").css("Display", "none");
+            //  $("#btnclose").css("Display", "block");
+            $("#btnclose").show();
+        }
+    }
+
+</script>
+<script>
+    function Reload() {
+        window.location.href = ("UsercourseAssigning");
+    }
+</script>
+
+
+@*<div class="card">
+    <div class="card-header" style="background-color:aliceblue">
+        <h3 class="card-title">Course Number Of Questions Entry Details</h3>
+    </div>
+     /.card-header 
+    <div class="card-body">
+        <table id="example1" class="table table-bordered table-striped table-responsive table-primary">
+            <thead>
+                <tr>
+                    <th>Course Name</th>
+                    <th>Number Of Quetions</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                    <tr class="tbhhover" onclick="setareamasterid(@item.ID)">
+
+                        <td>@item.COURSENAME</td>
+
+
+                        <td>@item.NUMBEROSQUETIONS</td>
+
+
+
+
+                    </tr>
+                }
+
+
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th>Course Name</th>
+                    <th>Number Of Quetions</th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+     /.card-body 
+</div>*@
+
+

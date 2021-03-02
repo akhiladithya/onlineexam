@@ -286,6 +286,16 @@ namespace onlineexams.Controllers
 
 
         #endregion
+         [HttpGet]
+        public ActionResult UsercourseAssigning()
+        {
+            List<Coursereg> dd = ff.Show_Course_data();
+
+            ViewBag.getcourses = new SelectList(dd, "Courseid", "COURSENAME");
+
+            List<Coursereg> dd1 = ff.Get_Course_QNData();
+            return View();
+        }
 
         [HttpGet]
         public ActionResult Get_cources_usercourseassign()
@@ -305,8 +315,22 @@ namespace onlineexams.Controllers
             
             return Json(qns, JsonRequestBehavior.AllowGet);
         }
+        [HttpPost]
+        public ActionResult Insert_transid(Usercourseassign qnlst)
+        {
+            //qns.QUESTIONID = Convert.ToInt32(Session["QID"].ToString());
+            var formateroles = (onlineexams.Models.Userregistration)Session["uname"];
+            qnlst.USERID= Convert.ToInt32(formateroles.Userid);
+            Outputclass op = ff.Insert_transid(qnlst);
 
-        
+            return Json(op, JsonRequestBehavior.AllowGet);
+
+        }
+
+
+
+
+
 
 
     }

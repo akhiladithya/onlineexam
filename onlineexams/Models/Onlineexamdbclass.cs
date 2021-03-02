@@ -221,6 +221,37 @@ namespace onlineexams.Models
                 conn.Close();
             }
         }
+         public Outputclass Insert_transid(Usercourseassign usercouass)
+        {
+            Outputclass outputclass = new Outputclass();
+            try
+            {
+                SqlCommand cmd = new SqlCommand("INSERT_TRANSACTIONID", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@COURSEID", usercouass.COURSEID);
+                cmd.Parameters.AddWithValue("@USERID", usercouass.USERID);
+                cmd.Parameters.AddWithValue("@DATEOFAPPROVE", usercouass.DATEOFAPPROVE);
+                cmd.Parameters.AddWithValue("@EXAMSTATUS", usercouass.EXAMSTATUSASSIGN);
+                cmd.Parameters.AddWithValue("@TRANSACTIONID", usercouass.TRANSACTIONID);
+                Connection();
+                int i = cmd.ExecuteNonQuery();
+                if (i > 0)
+                {
+                    outputclass.Count = i;
+                }
+                return outputclass;
+            }
+            catch (Exception ex)
+            {
+
+                outputclass.Msg = ex.ToString();
+                return outputclass;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
 
         [HttpGet]
         public List<Usercourseassign> Get_userassigndata()
