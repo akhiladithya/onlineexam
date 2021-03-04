@@ -12,6 +12,7 @@ namespace onlineexams.Controllers
     public class onlineExamUIController : Controller
     {
         // GET: onlineExamUI
+       
         onlineexamAPIController ff = new onlineexamAPIController();
         public ActionResult Index()
         {
@@ -289,7 +290,26 @@ namespace onlineexams.Controllers
          [HttpGet]
         public ActionResult UsercourseAssigning()
         {
+            Userregistration dd2 = (onlineexams.Models.Userregistration)Session["uname"];
+            string userid = dd2.Userid.ToString();
+            List<Usercourseassign> ucass = ff.Get_cources_request(userid);
             List<Coursereg> dd = ff.Show_Course_data();
+            List<Coursereg> data = new List<Coursereg>();
+            for (int i = 0; i < dd.Count; i++) 
+            {
+                for (int j = 0; j < ucass.Count; j++)
+                {
+                    if(dd[i].Courseid == ucass[j].COURSEID)
+                    {
+                        dd.RemoveAt(i);
+                        break;
+                    }
+
+                }
+            
+            }
+          
+            
 
             ViewBag.getcourses = new SelectList(dd, "Courseid", "COURSENAME");
 

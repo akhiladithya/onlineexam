@@ -36,6 +36,12 @@ namespace onlineexams.Controllers
             return dbcls.Get_cources_usercourseassign();
         }
 
+         [HttpGet]
+        public List<Usercourseassign> Get_cources_request(string userid)
+        {
+            return dbcls.Get_cources_request(userid);
+        }
+
         public Outputclass Create_QUESTIONs_(Usercourseassign usas)
         {
             return dbcls.Create_CourseAssign(usas);

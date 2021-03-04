@@ -58,6 +58,7 @@ namespace onlineexams.Models
     {
         public int? COURSEID { get; set; }
         public int? USERID { get; set; }
+        public string COURSRNAME { get; set; }
         public string DATEOFAPPROVE { get; set; }
         public string COURSEENDDATE { get; set; }
         public string COURSEDURATION { get; set; }

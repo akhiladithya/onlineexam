@@ -186,6 +186,42 @@ namespace onlineexams.Models
         }
 
 
+        
+        public List<Usercourseassign> Get_cources_request(string userid)
+        {
+            List<Usercourseassign> Uca = new List<Usercourseassign>();
+            try
+            {
+                SqlCommand cmd = new SqlCommand("GET_REQUEST_DETAILS", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@UID", userid);
+                DataTable dt = new DataTable();
+                Connection();
+                SqlDataReader dr = cmd.ExecuteReader();
+                Usercourseassign Uca1;
+
+                while (dr.Read())
+                {
+                    Uca1 = new Usercourseassign();
+                    Uca1.COURSEID = dr["COURSEID"] != null ? Convert.ToInt32(dr["COURSEID"]) : 0;
+                    Uca1.COURSRNAME = dr["COURSENAME"] != null ? dr["COURSENAME"].ToString() : "";
+                    Uca.Add(Uca1);
+                }
+                return Uca;
+            }
+
+            catch (Exception ex)
+            {
+
+                return null;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+
 
         public Outputclass Create_CourseAssign(Usercourseassign usercouass)
         {
@@ -222,7 +258,7 @@ namespace onlineexams.Models
             }
         }
          public Outputclass Insert_transid(Usercourseassign usercouass)
-        {
+         {
             Outputclass outputclass = new Outputclass();
             try
             {
