@@ -1,0 +1,333 @@
+﻿@model List<onlineexams.Models.Usercourseassign>
+@{
+    ViewBag.Title = "Courserequests";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+}
+
+
+
+
+@*<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css">
+
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.js"></script>*@
+
+
+
+<!-- DataTables -->
+
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<link href="~/overlay2.css" rel="stylesheet" />
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+@*<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>*@
+
+@**@
+@*<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">*@
+@*<link rel="stylesheet" href="/resources/demos/style.css">*@
+@*<script src="https://code.jquery.com/jquery-1.12.4.js"></script>*@
+@*<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>*@
+
+@*<script src="~/Scripts/jquery-3.3.1.js"></script>
+    <script src="~/Scripts/jquery-ui-1.12.1.js"></script>*@
+@*<link href="~/Scripts/jquery-ui.css" rel="stylesheet" />*@
+
+<style>
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+
+    span.span3 {
+        display: block;
+        color: red;
+        float: right;
+        top: -27px;
+        margin: 0 0 0 20px;
+        padding: 3px 10px;
+        color: #CE5454;
+        border-radius: 3px 4px 4px 3px;
+        /*background-color: #CE5454;*/
+        max-width: 280px;
+        position: relative;
+        margin-bottom: -20px;
+        opacity: 3;
+        left: 200px;
+    }
+
+
+    .table thead,
+    .table th {
+        text-align: center;
+    }
+</style>
+
+<script>
+    var check = "";
+    $(function () {
+        $('#popup').click(function () {
+            $('#ignismyModal').modal({
+                backdrop: 'static'
+            });
+        });
+        $("#example1").DataTable();
+        $("#click").click();
+        $('.space').on('keydown', function (e) {
+            if (e.which === 32 && e.target.selectionStart === 0) {
+                return false;
+            }
+        });
+        $(".space").on("keyup", function () {
+            if ($(this).val() != "") {
+                $(this).next("span").remove();
+
+                $(this).css('border', '');
+            }
+            else {
+
+                $(this).next("span").remove();
+
+                $(this).css('border', '1px solid red');
+
+            }
+        });
+        //$("#inputName").val(""),
+        //$("#ndays").val(""),
+        //COURSEFROMDATE: $("#startdate").val(), COURSETODATE: $("#enddate").val(), COURSEAMOUNT: $("#camt").val(), Description: $("#inputDescription").val(), TRAINERNAME: $("#Trainer").val()
+
+      
+    });
+</script>
+<script>
+
+</script>
+@*<script src="~/Scripts/jquery-3.4.1.min.js"></script>*@
+<script>
+    //function dd() {
+    //    $('#enddate').val("");
+    //    //var dd1 = "";
+    //    debugger
+    //    var date = new Date($("#startdate").val());
+    //        days = parseInt($("#ndays").val(), 10);
+    //    date.setDate(date.getDate() + days);
+
+    //    debugger
+    //    var date1 = new Date(date),
+
+    //        mnth = ("0" + (date1.getMonth() + 1)).slice(-2),
+    //        day = ("0" + date1.getDate()).slice(-2);
+    //    year = date1.getFullYear();
+    //    var ddd = [date.getFullYear(), mnth, day].join("-");
+    //    var dd1 = [day, mnth, date.getFullYear(),].join("-");
+    //    //dd1 = day + "-" + mnth + "-" + year;
+
+    //    var dd2 = dd1 != "aN-aN-NaN" ? dd1 : "";
+
+
+    //    $('#enddate').val(dd2);
+
+    //};
+
+    function dd() {
+        $('#enddate').val("");
+        //var dd1 = "";
+        debugger
+        days = parseInt($("#ndays").val(), 10);
+        var from = $("#startdate").val().split("-")
+        var f = new Date(from[2], from[1] - 1, from[0])
+        f.setDate(f.getDate() + days);
+        //var m = (f.getDate()<10?'0':")+
+        //var date = new Date($("#startdate").val()),
+
+        // date.setDate(date.getDate() + days);
+
+        debugger
+        var date1 = new Date(f),
+
+            mnth = ("0" + (date1.getMonth() + 1)).slice(-2),
+            day = ("0" + date1.getDate()).slice(-2);
+        year = date1.getFullYear();
+        // var ddd = [date.getFullYear(), mnth, day].join("-");
+        var dd1 = [day, mnth, date1.getFullYear(),].join("-");
+        //dd1 = day + "-" + mnth + "-" + year;
+
+        var dd2 = dd1 != "aN-aN-NaN" ? dd1 : "";
+
+
+        $('#enddate').val(dd2);
+
+    };
+</script>
+
+<script>
+    function Reload() {
+        window.location.href = ("CourseRegistration");
+    }
+</script>
+
+<script>
+
+
+
+    
+
+
+
+</script>
+
+<script>
+    function update(cid,uid,cname,trans) {
+        alert();
+        $.post("@Url.Content("~/onlineExamUI/Upadterequest")", { cid: cid, uid: uid, cname: cname, trans: trans }, function (data) {
+            if (data == true) {
+                 window.location.href='@Url.Content("~/onlineExamUI/Courserequestsupdate")'
+            }
+
+        })
+    }
+
+</script>
+
+
+<div class="card">
+    <div class="card-header" style="background-color:aliceblue">
+        <h3 class="card-title">Course Details</h3>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <table id="example1" class="table table-bordered table-striped table-responsive table-primary">
+            <thead>
+                <tr>
+                    <th hidden>Course ID</th>
+                    <th>Course Name</th>
+                    <th>User ID</th>
+                    <th>Transaction ID</th>
+                    
+                    
+                    <th>PreView</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                    <tr class="tbhhover" @*onclick="setareamasterid(@item.ID)"*@>
+                        <td hidden>@item.EXAMSTATUSASSIGN</td>
+                        
+                        <td>@item.COURSRNAME</td>
+                        <td>@item.DATEOFAPPROVE</td>
+                       <td>@item.TRANSACTIONID</td>
+                        <td><i style="" onclick="update('@item.EXAMSTATUSASSIGN','@item.DATEOFAPPROVE','@item.COURSRNAME','@item.TRANSACTIONID')" class="fa fa-edit">[PREVIEW]</i></td>
+                    </tr>
+                }
+
+
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th hidden>Course ID</th>
+                    <th>Course Name</th>
+                    <th>User ID</th>
+                    <th>Transaction ID</th>
+
+
+                    <th>PreView</th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    <!-- /.card-body -->
+</div>
+
+
+
+<div class="container">
+    <div class="row">
+        <a class="btn btn-primary" id="popup" data-toggle="modal" style="display:none" href="#ignismyModal">open Popup</a>
+        <div class="modal fade" id="ignismyModal" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        @*<button type="button" class="close" data-dismiss="modal" aria-label=""><span>×</span></button>*@
+                    </div>
+
+                    <div class="modal-body">
+
+                        <div class="thank-you-pop">
+                            @*<img src="http://goactionstations.co.uk/wp-content/uploads/2017/03/Green-Round-Tick.png" alt="">*@
+                            <h1 id="popuph1"> Success</h1>
+                            <p id="popupp"> </p>
+                            <!--<h3 class="cupon-pop">-->@*Your Id: <span>12345</span>*@<!--</h3>-->
+                            <button id="btnok" class="close" style="display:none" onclick="Reload()">OK</button>
+                            <button id="btnclose" class="close" style="display:none" data-dismiss="modal">OK</button>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function isexist() {
+        $.get("@Url.Content("~/onlineExamUI/Course_Isexistornot?cname=")" + $("#inputName").val(), function (data) {
+            debugger
+            //alert(data);
+            check = data;
+            if ($("#inputName").val() != "") {
+                if (data == false) {
+                    $("#vcoursename").css("display", "block");
+                    $("#vcoursename").css("color", "red");
+                    $("#vcoursename").text("Course name is not avaliable");
+
+                }
+                else {
+                    $("#vcoursename").css("display", "block");
+                    $("#vcoursename").css("color", "green");
+                    $("#vcoursename").text("Course name is avaliable");
+                }
+            }
+            else {
+                $("#vcoursename").css("display", "none");
+            }
+
+        });
+    }
+</script>
+
+
+
+<!-- Bootstrap 4 -->
+<!-- DataTables -->
+<!-- AdminLTE App -->
+<!-- AdminLTE for demo purposes -->
+@*<script src="~/dist/js/demo.js"></script>*@
+
+<!-- page script -->
+@*<script>
+        $(document).ready(function () {
+            //$(".datepic1").datepicker({
+            $("#startdate").datepicker({
+                onSelect: function (dateStr) {
+                    $(this).focus();
+                    //ValidateToDate()
+                    //Validate2();
+                },
+                dateFormat: 'dd-mm-yy',
+
+            });
+            $("#example1").DataTable();
+            $("#click").click();
+
+
+        });
+    </script>*@
+
+

@@ -53,6 +53,25 @@ namespace onlineexams.Controllers
             return dbcls.Get_userassigndata();
         }
 
+        [HttpGet]
+        public List<Usercourseassign> Get_user_Requests()
+        {
+            return dbcls.Get_user_Requests();
+        }
+
+        
+        [HttpGet]
+        public List<Usercourseassign> DASHBOARD_COURSE_REQUESTS()
+        {
+            return dbcls.DASHBOARD_COURSE_REQUESTS();
+        }
+         
+        [HttpGet]
+        public Outputclass COURSE_APPROVE(string userid, string courseid,string text)
+        {
+            return dbcls.COURSE_APPROVE(userid,courseid,text);
+        }
+
 
 
         #endregion

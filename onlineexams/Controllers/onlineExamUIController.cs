@@ -295,23 +295,23 @@ namespace onlineexams.Controllers
             List<Usercourseassign> ucass = ff.Get_cources_request(userid);
             List<Coursereg> dd = ff.Show_Course_data();
             List<Coursereg> data = new List<Coursereg>();
-            for (int i = 0; i < dd.Count; i++) 
-            {
-                for (int j = 0; j < ucass.Count; j++)
-                {
-                    if(dd[i].Courseid == ucass[j].COURSEID)
-                    {
-                        dd.RemoveAt(i);
-                        break;
-                    }
+            //for (int i = 0; i < dd.Count; i++) 
+            //{
+            //    for (int j = 0; j < ucass.Count; j++)
+            //    {
+            //        if(dd[i].Courseid == ucass[j].COURSEID)
+            //        {
+            //            dd.RemoveAt(i);
+            //            break;
+            //        }
 
-                }
+            //    }
             
-            }
+            //}
           
             
 
-            ViewBag.getcourses = new SelectList(dd, "Courseid", "COURSENAME");
+            ViewBag.getcourses = new SelectList(ucass, "COURSEID", "COURSRNAME");
 
             List<Coursereg> dd1 = ff.Get_Course_QNData();
             return View();
@@ -335,6 +335,19 @@ namespace onlineexams.Controllers
             
             return Json(qns, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpGet]
+        public ActionResult Get_user_Requests()
+        {
+
+            Usercourseassign qnlst = new Usercourseassign();
+            List<Usercourseassign> qns = ff.Get_user_Requests();
+
+            return Json(qns, JsonRequestBehavior.AllowGet);
+        }
+
+
+
         [HttpPost]
         public ActionResult Insert_transid(Usercourseassign qnlst)
         {
@@ -346,11 +359,41 @@ namespace onlineexams.Controllers
             return Json(op, JsonRequestBehavior.AllowGet);
 
         }
+        [HttpGet]
+        public ActionResult Courserequests()
+        {
+            List<Usercourseassign> dd = ff.DASHBOARD_COURSE_REQUESTS();
+            return View(dd);
+        }
+        [HttpPost]
+        public JsonResult Upadterequest(string cid,string uid,string cname,string trans)
+        {
+            Session["cidd"] = cid;
+            Session["uid"] = uid;
+            Session["cname"] = cname;
+            Session["trans"] = trans;
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
+        [HttpGet]
+        public ActionResult Courserequestsupdate()
+        {
+            Usercourseassign dd = new Usercourseassign();
+            dd.COURSEID = Convert.ToInt32(Session["cidd"].ToString());
+            dd.USERID = Convert.ToInt32(Session["uid"].ToString());
+            dd.COURSRNAME=Session["cname"].ToString();
+            dd.TRANSACTIONID=Session["trans"].ToString();
+            
+            return View(dd);
+        }
+        [HttpPost]
+        public ActionResult Courserequestsupdate1(string text)
+        {
+            string userid = Session["uid"].ToString();
+            string courseid = Session["cidd"].ToString();
+            Outputclass dd= ff.COURSE_APPROVE(userid, courseid, text);
 
-
-
-
-
+            return Json(dd, JsonRequestBehavior.AllowGet);
+        }
 
 
     }

@@ -1,0 +1,217 @@
+﻿@model onlineexams.Models.Usercourseassign
+
+@{
+    ViewBag.Title = "Courserequestsupdate";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+}
+
+<section class="content">
+
+    <div class="col-md-12" id="container">
+        <div class="card card-primary">
+            <div class="card-header">
+                <h3 class="card-title">Course Approval</h3>
+
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool dd" data-card-widget="collapse" data-toggle="tooltip" title="Add Course">
+                        <i class="fas fa-minus" id="click"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body mainbox col-md-10" id="dic">
+                <div class="form-group">
+
+                    <div class="col-md-6">
+                        <label for="inputName" class="col-form-label">Course Name</label><span style="color:red">*</span>
+                    </div>
+                    @*<label for="inputName">Course Name</label>*@
+                    <div class="col-md-6">
+                        <input type="text" id="inputName" onkeyup="isexist()" value="@Model.COURSRNAME" class="form-control space" readonly> @*maxlength="15"*@
+                        <font id="vcoursename" style="color:red ;display:none"></font>
+                    </div>
+
+
+                </div>
+
+
+                <div class="form-group">
+                    <div class="col-md-6">
+                        <label for="camt">User ID</label><span style="color:red">*</span>
+                    </div>
+                    <div class="col-md-6">
+                        <input type="text" value="@Model.USERID" id="camt" class="form-control space" readonly>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-6">
+                        <label for="ndays">Transaction ID</label><span style="color:red">*</span>
+                    </div>
+                    <div class="col-md-6">
+                        <input type="text" id="ndays" value="@Model.TRANSACTIONID"  class="form-control space" readonly>
+                    </div>
+                </div>
+
+
+
+
+
+                <!-- /.card-body -->
+
+            </div>
+            <div class="card-footer">
+
+
+                <input type="button" value="Approve" class="btn btn-success" onclick="coursepost('APPROVE')" />
+                <input type="button" value="Reject" class="btn btn-danger" onclick="coursepost('REJECT')" />
+                <input type="button" value="Cancel" class="btn btn-warning" onclick="Reload()" />
+
+
+
+
+            </div>
+            <!-- /.card -->
+        </div>
+
+
+    </div>
+
+</section>
+<div class="container">
+    <div class="row">
+        <a class="btn btn-primary" id="popup" data-toggle="modal" style="display:none" href="#ignismyModal">open Popup</a>
+        <div class="modal fade" id="ignismyModal" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        @*<button type="button" class="close" data-dismiss="modal" aria-label=""><span>×</span></button>*@
+                    </div>
+
+                    <div class="modal-body">
+
+                        <div class="thank-you-pop">
+                            @*<img src="http://goactionstations.co.uk/wp-content/uploads/2017/03/Green-Round-Tick.png" alt="">*@
+                            <h1 id="popuph1"> Success</h1>
+                            <p id="popupp"> </p>
+                            <!--<h3 class="cupon-pop">-->@*Your Id: <span>12345</span>*@<!--</h3>-->
+                            <button id="btnok" class="close" style="display:none" onclick="Reload()">OK</button>
+                            <button id="btnclose" class="close" style="display:none" data-dismiss="modal">OK</button>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+    function Reload() {
+    window.location.href = '@Url.Content("~/onlineExamUI/Courserequests")';
+    }
+</script>
+<script> 
+    function coursepost(text) {
+        //alert(text)
+       // if ($("#inputName").val() != "" && $("#camt").val() != "" && $("#ndays").val() != "") {
+              
+         $.post("@Url.Content("~/onlineExamUI/Courserequestsupdate1")",{ text: text }, function (data) {
+            debugger
+            if (data.Count >= "1") {
+            $("#popup").click();
+            $("#popuph1").text("Success");
+                $("#popuph1").css("color", "green");
+                if (text == "APPROVE") {
+                    $("#popupp").text("Course Approved Completed Successfully...!");
+                }
+                else {
+                    $("#popupp").text("Course Rejection Completed Successfully...!");
+                }
+            $("#btnok").show();
+            $("#btnclose").css("Display", "none");
+
+            }
+            else {
+            $("#popup").click();
+            $("#popuph1").text("Failed");
+            $("#popuph1").css("color", "red");
+            $("#popupp").text("Something Went Wrong....");
+            $("#btnok").css("Display", "none");
+            $("#btnclose").show();
+            }
+            })
+           // }
+         //   else {
+         //   debugger
+         //   $('#dic input[type=text]').each(function () {
+         //   if ($(this).val() == "") {
+         //   $(this).next("span").remove();
+
+         //   $(this).css('border', '1px solid red');
+         //   }
+         //   });
+         //   $('#dic input[type=number]').each(function () {
+         //   if ($(this).val() == "") {
+         //   $(this).next("span").remove();
+
+         //   $(this).css('border', '1px solid red');
+         //   }
+         //   });
+         //   $('#dic textarea').each(function () {
+         //   if ($(this).val() == "") {
+         //   $(this).next("span").remove();
+
+         //   $(this).css('border', '1px solid red');
+         //   }
+         //   });
+
+         //   //if ($("#inputName").val() == "") {
+         //   //    $("#inputName").next("span").remove();
+
+         //   //    $("#inputName").css('border', '1px solid red');
+         //   //}
+         //   //if ($("#inputDescription").val() == "") {
+         //   //    $("#inputDescription").next("span").remove();
+
+         //   //    $("#inputDescription").css('border', '1px solid red');
+         //   //}
+         //   //if ($("#ndays").val() == 0) {
+         //   //    $("#ndays").next("span").remove();
+
+         //   //    $("#ndays").css('border', '1px solid red');
+         //   //}
+         //   //if ($("#camt").val() == 0) {
+         //   //    $("#camt").next("span").remove();
+
+         //   //    $("#camt").css('border', '1px solid red');
+         //   //}
+         //   //if ($("#startdate").val() == "") {
+         //   //    $("#startdate").next("span").remove();
+
+         //   //    $("#startdate").css('border', '1px solid red');
+         //   //}
+         //   //if ($("#Trainer").val() == "") {
+         //   //    $("#Trainer").next("span").remove();
+
+         //   //    $("#Trainer").css('border', '1px solid red');
+         //   //}
+         //   //if ($("#Importance").val() == "") {
+         //   //    $("#Importance").next("span").remove();
+
+         //   //    $("#Importance").css('border', '1px solid red');
+         //   //}
+
+         //   $("#popup").click();
+         //   $("#popuph1").text("Warining..?");
+         //   $("#popuph1").css("color", "Yellow");
+         //   $("#popupp").text("Please some fileds are missing");
+         //   $("#btnok").css("Display", "none");
+         //   //  $("#btnclose").css("Display", "block");
+         //   $("#btnclose").show();
+         //}
+      }
+
+
+
+</script>

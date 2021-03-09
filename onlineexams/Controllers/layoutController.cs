@@ -17,6 +17,9 @@ namespace onlineexams.Controllers
         }
         public ActionResult data()
         {
+            List<Usercourseassign> qns = ff.Get_user_Requests();
+
+            ViewBag.requests = qns[0].DATEOFAPPROVE;
             return View();
         }
         public ActionResult DashBoard()
@@ -25,6 +28,7 @@ namespace onlineexams.Controllers
             List<Coursereg> crlst = ff.CourseRegistration_data_();
             colst.lst = crlst;
             colst.count = crlst.Count;
+
             return View(colst);
         }
     }

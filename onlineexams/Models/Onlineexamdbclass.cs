@@ -330,6 +330,105 @@ namespace onlineexams.Models
 
 
 
+        [HttpGet]
+        public List<Usercourseassign> Get_user_Requests()
+        {
+            List<Usercourseassign> Uca = new List<Usercourseassign>();
+            try
+            {
+                SqlCommand cmd = new SqlCommand("GET_REQUESTS", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                DataTable dt = new DataTable();
+                Connection();
+                SqlDataReader dr = cmd.ExecuteReader();
+                Usercourseassign Uca1;
+
+                while (dr.Read())
+                {
+                    Uca1 = new Usercourseassign();
+                    Uca1.DATEOFAPPROVE = dr["count"] != null ? dr["count"].ToString() : "";//To Get Request counts
+                    Uca.Add(Uca1);
+                }
+                return Uca;
+            }
+            catch (Exception ex)
+            {
+
+                return null;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+
+        [HttpGet]
+        public List<Usercourseassign> DASHBOARD_COURSE_REQUESTS()
+        {
+            List<Usercourseassign> Uca = new List<Usercourseassign>();
+            try
+            {
+                SqlCommand cmd = new SqlCommand("DASHBOARD_COURSE_REQUESTS", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                DataTable dt = new DataTable();
+                Connection();
+                SqlDataReader dr = cmd.ExecuteReader();
+                Usercourseassign Uca1;
+
+                while (dr.Read())
+                {
+                    Uca1 = new Usercourseassign();
+                    Uca1.DATEOFAPPROVE = dr["USERID"] != null ? dr["USERID"].ToString() : "";//To Store userid
+                    Uca1.EXAMSTATUSASSIGN = dr["COURSEID"] != null ? dr["COURSEID"].ToString() : "";//To Store courseid
+                    Uca1.TRANSACTIONID = dr["TRANSACTIONID"] != null ? dr["TRANSACTIONID"].ToString() : "";//To Store Transactionid
+                    Uca1.COURSRNAME = dr["COURSENAME"] != null ? dr["COURSENAME"].ToString() : "";//To Store coursename
+                    Uca.Add(Uca1);
+                }
+                return Uca;
+            }
+            catch (Exception ex)
+            {
+
+                return null;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+        
+
+        [HttpGet]
+        public Outputclass COURSE_APPROVE(string userid,string courseid,string text)
+        {
+            Outputclass opcls = new Outputclass();
+            try
+            {
+                SqlCommand cmd = new SqlCommand("COURSE_APPROVE", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@USERID", userid);
+                cmd.Parameters.AddWithValue("@COURSEID", courseid);
+                cmd.Parameters.AddWithValue("@BTNTEXT", text);
+                DataTable dt = new DataTable();
+                Connection();
+                opcls.Count = cmd.ExecuteNonQuery();
+
+                return opcls;
+            }
+            catch (Exception ex)
+            {
+
+                return null;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+
+
 
         #endregion
 

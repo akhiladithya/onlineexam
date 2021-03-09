@@ -10,13 +10,31 @@
     <title>Greeting Message</title>
 </head>
 <body>
-    <label id="lblGreetings" style="vertical-align: middle;"></label>
+    <div class="col-md-4" onclick="Redirect()">
+        <div class="info-box mb-3 bg-success">
+            <span class="info-box-icon"><i class="far fa-comment"></i></span>
+
+            <div class="info-box-content">
+                <span class="info-box-text">Course Requests</span>
+                <span class="info-box-number" id="countrequests">@ViewBag.requests</span>
+            </div>
+            <!-- /.info-box-content -->
+        </div>
+    </div>
 </body>
 
 
 </html>
 <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+
 <script>
+    function Redirect() {
+    window.location.href = '@Url.Content("~/onlineExamUI/Courserequests")';
+    }
+</script>
+
+
+@*<script>
     var myDate = new Date();
     var hrs = myDate.getHours();
 
@@ -31,5 +49,5 @@
 
     document.getElementById('lblGreetings').innerHTML =
         '<b>' + greet + '</b> and welcome to Online Trainee.......!' 
-</script>
+</script>*@
 
