@@ -76,12 +76,7 @@ namespace onlineexams.Controllers
 
         #endregion
 
-        #region Create Exam
-        public Outputclass Create_Exam_(Examtable exam)
-        {
-            return dbcls.Create_Exam(exam);
-        }
-        #endregion
+       
 
         #region Userregistration data
         [HttpGet]
@@ -222,6 +217,33 @@ namespace onlineexams.Controllers
         {
             return dbcls.Insert_transid(usercouass);
         }
+
+        #region Create Exam
+        public Outputclass Create_Exam_(Examtable exam)
+        {
+            return dbcls.Create_Exam(exam);
+        }
+
+        [HttpGet]
+        public List<Questioneries> GEET_QUESTIONS_BASEDONCOURSEID(string cid)
+        {
+            return dbcls.GEET_QUESTIONS_BASEDONCOURSEID(cid);
+        }
+
+        [HttpGet]
+        public List<Coursereg> GET_APPROVE_EXAMCOURSE(string userid)
+        {
+            return dbcls.GET_APPROVE_EXAMCOURSE(userid);
+        }
+
+        [HttpPost]
+        public Outputclass Insert_Examrequest(string COURSEID, string USERID)
+        {
+            return dbcls.Insert_Examrequest(COURSEID, USERID);
+        }
+
+        #endregion
+
 
 
     }

@@ -394,7 +394,26 @@ namespace onlineexams.Controllers
 
             return Json(dd, JsonRequestBehavior.AllowGet);
         }
+        [HttpGet]
+        public ActionResult ExamRequest()
+        {
+            var formateroles = (onlineexams.Models.Userregistration)Session["uname"];
+            string userid = (Convert.ToInt32(formateroles.Userid)).ToString();
+            //string userid = Session["uid"].ToString();
+           List<Coursereg> crlst= ff.GET_APPROVE_EXAMCOURSE(userid);
+            ViewBag.crdata = new SelectList(crlst, "COURSEIMPORTANCE", "COURSENAME");
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Insert_Examrequest(string COURSEID)
+        {
+            var formateroles = (onlineexams.Models.Userregistration)Session["uname"];
+            string USERID = (Convert.ToInt32(formateroles.Userid)).ToString();
+            Outputclass op = ff.Insert_Examrequest(COURSEID, USERID);
+
+            return Json(op, JsonRequestBehavior.AllowGet);
+        }
 
 
     }
-}
+}       

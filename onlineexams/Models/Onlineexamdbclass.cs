@@ -112,41 +112,7 @@ namespace onlineexams.Models
         
         #endregion
 
-        #region Exam Create
-        public Outputclass Create_Exam(Examtable exam)
-        {
-            Outputclass outputclass = new Outputclass();
-            try
-            {
-                SqlCommand cmd = new SqlCommand("Insert_EXAMTABLE", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@USERID", exam.USERID);
-                cmd.Parameters.AddWithValue("@COURSEID", exam.COURSEID);
-                cmd.Parameters.AddWithValue("@QUESTION", exam.QUESTION);
-                cmd.Parameters.AddWithValue("@ANSWER", exam.ANSWER);
-                cmd.Parameters.AddWithValue("@MARKS", exam.MARKS);
-                cmd.Parameters.AddWithValue("@TOTALMARKS", exam.TOTALMARKS);
-                cmd.Parameters.AddWithValue("@STATUS", exam.STATUS);
-                Connection();
-                int i = cmd.ExecuteNonQuery();
-                if (i > 0)
-                {
-                    outputclass.Count = i;
-                }
-                return outputclass;
-            }
-            catch (Exception ex)
-            {
-
-                outputclass.Msg = ex.ToString();
-                return outputclass;
-            }
-            finally
-            {
-                conn.Close();
-            }
-        }
-        #endregion
+        
 
         #region User Course Assign
 
@@ -1155,6 +1121,139 @@ namespace onlineexams.Models
 
 
         #endregion
+
+        #region Exam Create
+        public Outputclass Create_Exam(Examtable exam)
+        {
+            Outputclass outputclass = new Outputclass();
+            try
+            {
+                SqlCommand cmd = new SqlCommand("INSERT_EXAMDATA", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@USERID", exam.USERID);
+                cmd.Parameters.AddWithValue("@COURSEID", exam.COURSEID);
+                cmd.Parameters.AddWithValue("@EXAMCODE", exam.EXAMCODE);
+                cmd.Parameters.AddWithValue("@ATTPT", exam.ATTEMPT);
+                cmd.Parameters.AddWithValue("@QNID", exam.QUESTIONID);
+                cmd.Parameters.AddWithValue("@QUESTION", exam.QUESTION);
+                cmd.Parameters.AddWithValue("@UANS", exam.USERANSWER);
+                cmd.Parameters.AddWithValue("@MARKS", exam.MARKS);
+                Connection();
+                int i = cmd.ExecuteNonQuery();
+                if (i > 0)
+                {
+                    outputclass.Count = i;
+                }
+                return outputclass;
+            }
+            catch (Exception ex)
+            {
+
+                outputclass.Msg = ex.ToString();
+                return outputclass;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        public List<Questioneries> GEET_QUESTIONS_BASEDONCOURSEID(string cid)
+        {
+            List<Questioneries> qnlist = new List<Questioneries>();
+            try
+            {
+                SqlCommand cmd = new SqlCommand("GEET_QUESTIONS_BASEDONCOURSEID", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@CID", cid);
+                Connection();
+                SqlDataReader dr = cmd.ExecuteReader();
+                Questioneries qnlist1;
+                while (dr.Read())
+                {
+                    qnlist1 = new Questioneries();
+                    qnlist1.MMarks = dr["MARKS"] != null ? dr["MARKS"].ToString() : "";
+                    qnlist1.QUESTION = dr["QUESTION"] != null ? dr["QUESTION"].ToString() : "";
+                    qnlist1.OP1 = dr["A"] != null ? dr["A"].ToString() : "";
+                    qnlist1.OP2 = dr["B"] != null ? dr["B"].ToString() : "";
+                    qnlist1.OP3 = dr["C"] != null ? dr["C"].ToString() : "";
+                    qnlist1.OP4 = dr["D"] != null ? dr["D"].ToString() : "";
+                    qnlist1.ANSWER = dr["ANSWER"] != null ? dr["ANSWER"].ToString() : "";
+                    qnlist.Add(qnlist1);
+                }
+                return qnlist;
+            }
+            catch (Exception ch)
+            {
+                return qnlist;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        public List<Coursereg> GET_APPROVE_EXAMCOURSE(string userid)
+        {
+            List<Coursereg> qnlist = new List<Coursereg>();
+            try
+            {
+                SqlCommand cmd = new SqlCommand("GET_APPROVE_EXAMCOURSE", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@UID", userid);
+                Connection();
+                SqlDataReader dr = cmd.ExecuteReader();
+                Coursereg qnlist1;
+                while (dr.Read())
+                {
+                    qnlist1 = new Coursereg();
+                    qnlist1.COURSEIMPORTANCE = dr["COURSEID"] != null ? dr["COURSEID"].ToString() : "";//To store Courseid
+                    qnlist1.COURSENAME = dr["COURSENAME"] != null ? dr["COURSENAME"].ToString() : "";
+                    qnlist.Add(qnlist1);
+                }
+                return qnlist;
+            }
+            catch (Exception ch)
+            {
+                return qnlist;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        public Outputclass Insert_Examrequest(string COURSEID, string USERID)
+        {
+            Outputclass outputclass = new Outputclass();
+            try
+            {
+                SqlCommand cmd = new SqlCommand("EXAM_REQUEST", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@COURSEID", COURSEID);
+                cmd.Parameters.AddWithValue("@USERID", USERID);
+                Connection();
+                int i = cmd.ExecuteNonQuery();
+                if (i > 0)
+                {
+                    outputclass.Count = i;
+                }
+                return outputclass;
+            }
+            catch (Exception ex)
+            {
+
+                outputclass.Msg = ex.ToString();
+                return outputclass;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        #endregion
+
 
     }
 }

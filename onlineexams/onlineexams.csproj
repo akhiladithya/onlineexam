@@ -2366,6 +2366,7 @@
     <Content Include="Views\onlineExamUI\UsercourseAssigning.cshtml" />
     <Content Include="Views\onlineExamUI\Courserequests.cshtml" />
     <Content Include="Views\onlineExamUI\Courserequestsupdate.cshtml" />
+    <Content Include="Views\onlineExamUI\ExamRequest.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -70,8 +70,12 @@ namespace onlineexams.Models
     {
         public int? USERID { get; set; }
         public int? COURSEID { get; set; }
+        public string EXAMCODE { get; set; }
+        public string ATTEMPT { get; set; }
+        public string QUESTIONID { get; set; }
         public string QUESTION { get; set; }
         public string ANSWER { get; set; }
+        public string USERANSWER { get; set; }
         public string MARKS { get; set; }
         public string TOTALMARKS { get; set; }
         public string STATUS { get; set; }
